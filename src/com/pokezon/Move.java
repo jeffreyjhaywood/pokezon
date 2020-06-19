@@ -1,4 +1,11 @@
 package com.pokezon;
 
-public class Move {
-}
+
+    public class Move{
+
+        private String name;
+
+    }
+
+
+
