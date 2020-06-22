@@ -2,6 +2,7 @@ package com.pokezon.gameclient;
 
 import com.pokezon.Battle;
 import com.pokezon.Move;
+import com.pokezon.Pokezon;
 
 import java.util.Scanner;
 
@@ -34,7 +35,7 @@ public final class Dialogue {
         System.out.println("2. Switch Pokezon");
         System.out.println("3. Quit Game");
 
-        return Integer.parseInt(input.nextLine());
+        return input.nextInt();
     }
 
     public static int attackChoiceDialogue(Battle battle) {
@@ -42,11 +43,21 @@ public final class Dialogue {
         System.out.println("1. Tackle");
         System.out.println("2. Water Gun");
 
-//        for (Move move : battle.getPlayer().getCurrentPokezon().getKnownMoves) {
+//        for (Move move : battle.getPlayer().getCurrentPokezon().getKnownMoves()) {
 //            System.out.println(move.getName());
 //        }
 
-        return Integer.parseInt(input.nextLine());
+        return input.nextInt();
+    }
+
+    public static int pokezonChoiceDialogue(Battle battle) {
+        int i = 0;
+        for (Pokezon pokezon : battle.getPlayer().getPokezonTeam()) {
+            i++;
+            System.out.println(i + ". " + pokezon.getName());
+        }
+
+        return input.nextInt();
     }
 
     public static void lossDialogue() {
