@@ -18,13 +18,13 @@ public class Trainer {
     }
 
     // BUSINESS METHODS
-    public void choosePokezon(int choice){
+    public void choosePokezon(int choice) {
         this.currentPokezon = pokezonTeam[choice];
     }
 
     //
-    public void chooseMove(int choice){
-       //currentPokezon.useMove(choice);
+    public void chooseMove(int choice) {
+        //currentPokezon.useMove(choice);
     }
 
     // GETTERS AND SETTERS

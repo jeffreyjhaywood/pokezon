@@ -40,7 +40,7 @@ public class Pokezon {
     }
 
     // Constructors ( Coming Soon )
-    Pokezon() {
+    public Pokezon() {
 
     }
 
