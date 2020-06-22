@@ -9,11 +9,32 @@ import java.util.Scanner;
 public class GameClient {
     public static void main(String[] args) {
         Trainer player = new Trainer(Dialogue.introDialogue());
-        Pokezon[] team = {new Pokezon(), new Pokezon(), new Pokezon()};
-        team[0].setName("Charmander");
-        team[1].setName("Bulbasaur");
-        team[2].setName("Squirtle");
-        player.setPokezonTeam(team);
+
+        Pokezon pokezon = new Pokezon();
+
+        switch (Dialogue.chooseFirstPokezonDialogue()){
+
+            case 1:
+                pokezon.setName("Charmander");
+                break;
+
+            case 2:
+                pokezon.setName("Bulbasaur");
+                break;
+
+            case 3:
+                pokezon.setName("Squirtle");
+                break;
+
+            default:
+
+        }
+        Pokezon[] pokezonTeam = new Pokezon[3];
+        pokezonTeam[0] = pokezon;
+        player.setPokezonTeam(pokezonTeam);
+
+        player.setCurrentPokezon(pokezonTeam[0]);
+
 
         int numWins = 0;
 

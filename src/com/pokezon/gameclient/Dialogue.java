@@ -4,6 +4,7 @@ import com.pokezon.Battle;
 import com.pokezon.Move;
 import com.pokezon.Pokezon;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public final class Dialogue {
@@ -19,6 +20,21 @@ public final class Dialogue {
 
         return name;
     }
+    public static int chooseFirstPokezonDialogue(){
+        System.out.println("Would you like to choose your Pokezon?");
+        System.out.println("1. Charmander");
+        System.out.println("2. Bulbasaur");
+        System.out.println("3. Squirtle");
+
+        int choice = input.nextInt();
+        return choice;
+
+
+
+    }
+
+
+
 
     public static void battleStartDialogue(Battle battle) { // Pass in a Battle as a parameter
         System.out.println("Enemy Name" + " has started a battle!");
@@ -26,7 +42,7 @@ public final class Dialogue {
         // if statement for special dialogue?
 
         System.out.println("Enemy Name" + " sends out " + "Enemy Pokezon Name");
-        System.out.println(battle.getPlayer().getName() + " sends out " + "battle.getPlayer().getCurrentPokezon()");
+        System.out.println(battle.getPlayer().getName() + " sends out " + battle.getPlayer().getCurrentPokezon().getName());
     }
 
     public static int battleChoiceDialogue() { // Pass in a Battle as a parameter
