@@ -1,5 +1,6 @@
 package com.pokezon.gameclient;
 
+import com.pokezon.Battle;
 import com.pokezon.Move;
 
 import java.util.Scanner;
@@ -18,13 +19,13 @@ public final class Dialogue {
         return name;
     }
 
-    public static void battleStartDialogue() { // Pass in a Battle as a parameter
+    public static void battleStartDialogue(Battle battle) { // Pass in a Battle as a parameter
         System.out.println("Enemy Name" + " has started a battle!");
 
         // if statement for special dialogue?
 
         System.out.println("Enemy Name" + " sends out " + "Enemy Pokezon Name");
-        System.out.println("Player Name" + " sends out " + "Player Pokezon Name");
+        System.out.println(battle.getPlayer().getName() + " sends out " + "battle.getPlayer().getCurrentPokezon()");
     }
 
     public static int battleChoiceDialogue() { // Pass in a Battle as a parameter
@@ -36,12 +37,14 @@ public final class Dialogue {
         return Integer.parseInt(input.nextLine());
     }
 
-    public static int attackChoiceDialogue() {
+    public static int attackChoiceDialogue(Battle battle) {
         System.out.println("Choose an attack!");
+        System.out.println("1. Tackle");
+        System.out.println("2. Water Gun");
 
-        for (Move move : battle.getTrainer().getCurrentPokezon().getKnownMoves()) {
-            System.out.println(move.getName());
-        }
+//        for (Move move : battle.getPlayer().getCurrentPokezon().getKnownMoves) {
+//            System.out.println(move.getName());
+//        }
 
         return Integer.parseInt(input.nextLine());
     }
