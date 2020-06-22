@@ -5,8 +5,12 @@ public class TrainerBattle extends Battle {
     private Trainer enemyTrainer;
 
     // Constructor
-    public TrainerBattle(){
+    public TrainerBattle() {
         setEnemyTrainer();
+    }
+
+    public TrainerBattle(Trainer enemyTrainer){
+        setEnemyTrainer(enemyTrainer);
     }
 
 
@@ -25,6 +29,10 @@ public class TrainerBattle extends Battle {
     public void setEnemyTrainer() {
         // Generate Random enemyTrainer - this is just an example
         this.enemyTrainer = (Math.random() < .5) ? new Trainer("Bill") : new Trainer("Smith");
+    }
+
+    public void setEnemyTrainer(Trainer enemyTrainer){
+        this.enemyTrainer = enemyTrainer;
     }
 
 }

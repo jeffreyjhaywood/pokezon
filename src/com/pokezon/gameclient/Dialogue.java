@@ -1,8 +1,6 @@
 package com.pokezon.gameclient;
 
-import com.pokezon.Battle;
-import com.pokezon.Move;
-import com.pokezon.Pokezon;
+import com.pokezon.*;
 
 import java.sql.SQLOutput;
 import java.util.Scanner;
@@ -28,20 +26,44 @@ public final class Dialogue {
 
         int choice = input.nextInt();
         return choice;
-
-
-
     }
 
+    public static Pokezon meetingRivalDialogue(Trainer player, Trainer rival){
+        System.out.println(player.getCurrentPokezon().getName() + " What a wonderful choice!");
+        System.out.println("Who is that my grandson?");
 
+        Pokezon pokezon = new Pokezon();
 
+        switch (player.getCurrentPokezon().getName()){
+            case "Bulbasaur":
+                pokezon.setName("Charmander");
+                break;
+            case "Squirtle":
+                pokezon.setName("Bulbasaur");
+                break;
+            case "Charmander":
+                pokezon.setName("Squirtle");
+                break;
+            default:
+        }
+        System.out.println("Oh you chose " + player.getCurrentPokezon().getName()
+                + ", I'm going to choose " + pokezon.getName());
+        System.out.println("Lets battle!");
+        return pokezon;
+    }
 
     public static void battleStartDialogue(Battle battle) { // Pass in a Battle as a parameter
-        System.out.println("Enemy Name" + " has started a battle!");
+        if (battle.getClass() == TrainerBattle.class) {
+            TrainerBattle trainerBattle = (TrainerBattle) battle;
+            System.out.println(trainerBattle.getEnemyTrainer().getName() + " has started a battle!");
+            System.out.println(trainerBattle.getEnemyTrainer().getName() + " sends out "
+                    + trainerBattle.getEnemyTrainer().getCurrentPokezon().getName());
+        }else {
+            WildBattle wildBattle = (WildBattle) battle;
+            System.out.println(wildBattle.getEnemyPokezon().getName() + " has started a battle!");
+            }
 
         // if statement for special dialogue?
-
-        System.out.println("Enemy Name" + " sends out " + "Enemy Pokezon Name");
         System.out.println(battle.getPlayer().getName() + " sends out " + battle.getPlayer().getCurrentPokezon().getName());
     }
 
