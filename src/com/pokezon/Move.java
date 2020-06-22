@@ -3,45 +3,64 @@ package com.pokezon;
 public class Move {
     public static String name;
     public static String type;
-    public static int BaseAttack;
+    public static int baseAttack;
     public static int Mana;
     public static int CurrentMana;
 
-
-
-    public static String getName() {
+    //move getters and setter
+    public String getName() {
         return name;
     }
 
-    public static String getType() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
         return type;
     }
 
-    public static int getBaseAttack() {
-        return BaseAttack;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public static int getMana() {
+    public int getbaseAttack() {
+        return baseAttack;
+    }
+
+    public void setbaseAttack(int baseAttack) {
+        this.baseAttack = baseAttack;
+    }
+
+    public int getMana() {
         return Mana;
     }
 
-    public static int getCurrentMana() {
+    public void setMana(int Mana) {
+        this.Mana = Mana;
+    }
+
+    public int getCurrentMana() {
         return CurrentMana;
     }
 
-       private void (String name, String Type,int Mana, int BaseAttack, int CurrentMana){
-            Move.name = name;
-            Move.Mana = Mana;
-            Move.BaseAttack = BaseAttack;
-            Move.CurrentMana = CurrentMana;
-
-            System.out.println("This is:" + name);
-            System.out.println(name + "is a:" + type);
-            System.out.println("Attacking with:" + BaseAttack);
-       }
+    public void setCurrentMana(int CurrentMana) {
+        this.CurrentMana = CurrentMana;
+    }
 
 
 }
+
+
+
+
+
+
+     
+
+            
+
+
 
 
 
