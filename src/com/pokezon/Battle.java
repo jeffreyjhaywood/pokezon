@@ -3,14 +3,16 @@ package com.pokezon;
 public abstract class Battle {
     // BATTLE INSTANCE VARIABLES
     private Trainer player;
-    private int xpForWin;
+    private double xpForWin;
+    // BATTLE CONSTANTS
+    public final double BASE_XP = 10.0;
 
     // BATTLE BUSINESS METHODS
     public static Battle randomBattle(){
         // Need to downcast in client to access subclass-only properties
         return (Math.random() < .5) ? new TrainerBattle() : new WildBattle();
     }
-    public abstract void giveXpForWin(int xp);
+    public abstract void giveXpForWin();
 
     // BATTLE GETTERS AND SETTERS
     public Trainer getPlayer() {
@@ -21,11 +23,11 @@ public abstract class Battle {
         this.player = player;
     }
 
-    public int getXpForWin() {
+    public double getXpForWin() {
         return xpForWin;
     }
 
-    public void setXpForWin(int xpForWin) {
+    public void setXpForWin(double xpForWin) {
         this.xpForWin = xpForWin;
     }
 

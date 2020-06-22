@@ -5,16 +5,15 @@ public class WildBattle extends Battle{
     // WildBattle Instance Variables
     private Pokezon enemyPokezon;
 
-    // Constructor
-    public WildBattle(){
-        // WildName argument should be replace with random Wild Pokezon method generator declare in Pokezon.java
-        // setEnemyPokezon(new Pokezon("WildName"));
-    }
+    /* No Constructor to maintain loose coupling?
+     * will assign properties using setters
+     * If WildBattle instantiated
+     */
 
     // WildBattle Business methods
     @Override
-    public void giveXpForWin(int xp) {
-        setXpForWin(xp); // Offer less xp
+    public void giveXpForWin() {
+        setXpForWin(BASE_XP); // Offer less xp
     }
 
     // WildBattle Subclass Getters And Setters
@@ -22,8 +21,8 @@ public class WildBattle extends Battle{
         return enemyPokezon;
     }
 
-    public void setEnemyPokezon(Pokezon enemyPokezon) {
-        this.enemyPokezon = enemyPokezon;
+    public void setEnemyPokezon(Pokezon randomPokezon) {
+        this.enemyPokezon = randomPokezon;
     }
 
 }
