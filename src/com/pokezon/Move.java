@@ -4,23 +4,29 @@ public class Move {
     private final int BASE_DAMAGE = 10;
     private String name;
     private PokeType type;
-    private int mana;
+    private int mana = 20;
     private int currentMana;
 
     public double damageCalculator(PokeType enemyWeakness){
         double damage = BASE_DAMAGE;
         if (enemyWeakness == type){
             damage *= 2;
+
         }
         return damage;
     }
 
+    public Move(String name, PokeType type, int mana) {
+        setName(name);
+        setType(type);
+        setMana(mana);
+        setCurrentMana(mana);
+    }
 
     //move getters and setter
     public String getName() {
         return this.name;
     }
-
 
     public void setName(String name) {
         this.name = name;

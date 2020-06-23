@@ -1,5 +1,7 @@
 package com.pokezon;
 
+import java.util.Arrays;
+
 public class Pokezon {
     // Constants
     private final double BASE_XP = 10;
@@ -36,18 +38,26 @@ public class Pokezon {
     }
 
     public void useMove(int choice, Pokezon enemy) {
-        //double damage = knownMoves[choice].damageCalculator(enemyType);
-        double damage = 10;
+        choice -= 1;
+        double damage = knownMoves[choice].damageCalculator(enemy.getType());
+        System.out.println(getName() + " used " + knownMoves[choice].getName() + "!");
         enemy.takeDamage(damage);
     }
 
     public void takeDamage(double incomingDamage) {
-        setCurrentHealth(getMaxHealth() - incomingDamage);
+        double newHealthValue = getCurrentHealth() - incomingDamage;
+        System.out.println(getName() + " took " + incomingDamage + " damage!");
+        setCurrentHealth(newHealthValue);
     }
 
     // Constructors ( Coming Soon )
     public Pokezon() {
 
+    }
+
+    public Pokezon(String name, PokeType type, PokeType weakness) {
+        setName(name);
+        setType(type);
     }
 
     // Getters/Setters
@@ -128,21 +138,42 @@ public class Pokezon {
         }
     }
 
+    public void setMove(Move move) { // Add move to array to first empty element
+        int i = 0;
+        for (Move availableMove : knownMoves) {
+            if (availableMove == null) {
+                knownMoves[i] = move;
+                return;
+            }
+            i++;
+        }
+    }
+
+    public Move[] getKnownMoves() {
+        return this.knownMoves;
+    }
+
     public void setKnownMoves(Move[] knownMoves) {
         this.knownMoves = knownMoves;
+    }
+
+    public boolean isFainted() {
+        return this.isFainted;
     }
 
     @Override
     public String toString() {
         return "Pokezon{" +
-                "name='" + getName() + '\'' +
-                ", type=" + getType() +
-                ", weakness=" + getWeakness() +
-                ", level=" + getLevel() +
-                ", xp=" + getXP() +
-                ", xpToNextLevel=" + getXPToNextLevel() +
-                ", maxHealth=" + getMaxHealth() +
-                ", currentHealth=" + getCurrentHealth() +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", weakness=" + weakness +
+                ", level=" + level +
+                ", xp=" + xp +
+                ", xpToNextLevel=" + xpToNextLevel +
+                ", maxHealth=" + maxHealth +
+                ", currentHealth=" + currentHealth +
+                ", knownMoves=" + Arrays.toString(knownMoves) +
+                ", learnableMoves=" + Arrays.toString(learnableMoves) +
                 ", isCapturable=" + isCapturable +
                 ", isFainted=" + isFainted +
                 '}';

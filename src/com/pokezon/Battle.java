@@ -5,6 +5,7 @@ public abstract class Battle {
     private Trainer player;
     private double xpForWin;
     private boolean isBattleOver = false;
+    private boolean didPlayerWin = false;
     private int numRounds;
     private Pokezon playerPokezon;
     private Pokezon enemyPokezon;
@@ -42,6 +43,14 @@ public abstract class Battle {
 
     public void setBattleOver(boolean isBattleOver) {
         this.isBattleOver = isBattleOver;
+    }
+
+    public boolean didPlayerWin() {
+        return this.didPlayerWin;
+    }
+
+    public void setPlayerWin(boolean result) {
+        didPlayerWin = result;
     }
 
     public int getNumRounds() {

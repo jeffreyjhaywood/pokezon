@@ -1,5 +1,5 @@
 package com.pokezon;
 
 public enum PokeType {
-    GRASS, WATER, FIRE
+    GRASS, WATER, FIRE, NORMAL
 }

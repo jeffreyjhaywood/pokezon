@@ -1,31 +1,46 @@
 package com.pokezon.gameclient;
 
-import com.pokezon.Battle;
-import com.pokezon.Pokezon;
-import com.pokezon.Trainer;
-import com.pokezon.TrainerBattle;
+import com.pokezon.*;
 
 public class GameClient {
+    private static final int WIN_CONDITION = 5;
+
     public static void main(String[] args) throws Exception {
-        Trainer player = new Trainer(Dialogue.introDialogue());
+        String playerName = Dialogue.introDialogue();
+        Trainer player = new Trainer(playerName);
         Trainer rivalPlayer = new Trainer("Jay");
 
-        Pokezon pokezon = new Pokezon();
+        // Create player's pokezon and assign its initial 2 moves to it
+        Pokezon pokezon;
+        Move move1;
+        Move move2 = new Move("Tackle", PokeType.NORMAL, 20);
 
-        switch (Dialogue.chooseFirstPokezonDialogue()) {
+        int pokezonChoice = Dialogue.chooseFirstPokezonDialogue();
+
+        switch (pokezonChoice) {
             case 1:
-                pokezon.setName("Charmander");
+                pokezon = new Pokezon("Charmander", PokeType.FIRE, PokeType.WATER);
+                move1 = new Move("Ember", PokeType.FIRE, 20);
+                pokezon.setMove(move1);
+                pokezon.setMove(move2);
                 break;
 
             case 2:
-                pokezon.setName("Bulbasaur");
+                pokezon = new Pokezon("Bulbasaur", PokeType.GRASS, PokeType.FIRE);
+                move1 = new Move("Vine Whip", PokeType.GRASS, 20);
+                pokezon.setMove(move1);
+                pokezon.setMove(move2);
                 break;
 
             case 3:
-                pokezon.setName("Squirtle");
+                pokezon = new Pokezon("Squirtle", PokeType.WATER, PokeType.GRASS);
+                move1 = new Move("Water Gun", PokeType.WATER, 20);
+                pokezon.setMove(move1);
+                pokezon.setMove(move2);
                 break;
 
             default:
+                pokezon = null;
         }
 
         // Add chosen Pokezon to player team
@@ -37,35 +52,45 @@ public class GameClient {
         // Add rival's chosen Pokezen to rival team
         Pokezon[] rivalPokezonTeam = new Pokezon[3];
         rivalPokezonTeam[0] = Dialogue.meetingRivalDialogue(player, rivalPlayer);
+        rivalPokezonTeam[0].setMove(move2);
         rivalPlayer.setPokezonTeam(rivalPokezonTeam);
         rivalPlayer.setCurrentPokezon(rivalPokezonTeam[0]);
 
         int numWins = 0;
-
         Battle battle;
 
-        while (numWins < 5) { // Game win condition is to win 5 battles, loop until 5 wins or player loses.
+        while (numWins < WIN_CONDITION) { // Game win condition is to win 5 battles, loop until 5 wins or player loses.
             int numRounds = 0;
 
-            while (true) { // Keep looping until the battle is over.
+            if (numWins == 0) { // Always fight rival at the beginning of game
+                battle = new TrainerBattle(rivalPlayer);
+            }
+            else {
+                battle = Battle.randomBattle();
+            }
+            battle.setPlayer(player);
+            battle.setPlayerPokezon(player.getCurrentPokezon());
 
-                if (numWins == 0) { // Always fight rival at the beginning of game
-                    battle = new TrainerBattle(rivalPlayer);
-                }
-                else {
-                    battle = Battle.randomBattle();
-                }
-                battle.setPlayer(player);
+            boolean isTrainerBattle = battle.getClass() == TrainerBattle.class;
+            if (isTrainerBattle) {
+                Pokezon enemyPokezon = ((TrainerBattle) battle).getEnemyTrainer().getCurrentPokezon();
+                battle.setEnemyPokezon(enemyPokezon);
+            }
+            else {
+                Pokezon enemyPokezon = new Pokezon("Squirtle", PokeType.WATER, PokeType.GRASS);
+                enemyPokezon.setMove(new Move("Water Gun", PokeType.WATER, 20));
+                battle.setEnemyPokezon(enemyPokezon); // Change to create random pokezon
+            }
+            Dialogue.battleStartDialogue(battle);
 
-                if (numRounds == 0) { // At the beginning of a battle
-                    Dialogue.battleStartDialogue(battle);
-                }
+            while (!battle.isBattleOver()) { // Keep looping until the battle is over.
+                Dialogue.battleDiagnosticsDialogue(battle);
 
-                switch (Dialogue.battleChoiceDialogue()) {
+                int battleChoice = Dialogue.battleChoiceDialogue();
+                switch (battleChoice) {
                     case 1:
-//                        battle.getPlayer().getCurrentPokezon().useMove(Dialogue.attackChoiceDialogue(battle));
-                        System.out.println("Player chose attack " + Dialogue.attackChoiceDialogue(battle));
-//                        battle.getPlayerPokezon().useMove(Dialogue.attackChoiceDialogue(battle), battle.getEnemyPokezon());
+                        int moveChoice = Dialogue.attackChoiceDialogue(battle);
+                        battle.getPlayerPokezon().useMove(moveChoice, battle.getEnemyPokezon());
                         break;
 
                     case 2:
@@ -82,11 +107,27 @@ public class GameClient {
                     default:
                 }
 
-                if (false) { // Condition that player won the battle
+                if ( battle.getEnemyPokezon().isFainted()) {
+                    battle.setBattleOver(true);
+                    battle.setPlayerWin(true);
+                }
+
+                // Enemy attacks player
+                if (!battle.isBattleOver()) {
+                    battle.getEnemyPokezon().useMove(1, battle.getPlayerPokezon());
+                }
+
+                if (battle.getPlayerPokezon().isFainted()) {
+                    battle.setBattleOver(true);
+                    battle.setPlayerWin(false);
+                }
+
+                if (battle.isBattleOver() && battle.didPlayerWin()) { // Condition that player won the battle
                     numWins++;
+                    Dialogue.winDialogue();
                     break;
                 }
-                else if (false) { // Player lost the battle
+                else if (battle.isBattleOver() && !battle.didPlayerWin()) { // Player lost the battle
                     Dialogue.lossDialogue();
                     System.exit(0); // Quits the game
                 }

@@ -9,6 +9,7 @@ public class Trainer {
     private Pokezon[] pokezonTeam;
     private Pokezon currentPokezon;
     private int numWins;
+    private int numFaintedPokezon = 0;
 
     // CONSTRUCTORS
 
@@ -17,14 +18,19 @@ public class Trainer {
         setName(name);
     }
 
+    public Trainer(String name, Pokezon currentPokezon) {
+        this(name);
+        setCurrentPokezon(currentPokezon);
+    }
+
     // BUSINESS METHODS
     public void choosePokezon(int choice) {
         this.currentPokezon = pokezonTeam[choice];
     }
 
     //
-    public void chooseMove(int choice) {
-        //currentPokezon.useMove(choice);
+    public void chooseMove(int choice, Pokezon enemy) {
+        currentPokezon.useMove(choice, enemy);
     }
 
     // GETTERS AND SETTERS
@@ -62,6 +68,14 @@ public class Trainer {
 
     public void setNumWins(int numWins) {
         this.numWins = numWins;
+    }
+
+    public int getNumFaintedPokezon() {
+        return numFaintedPokezon;
+    }
+
+    public void setNumFaintedPokezon(int numFaintedPokezon) {
+        this.numFaintedPokezon = numFaintedPokezon;
     }
 
     @Override
