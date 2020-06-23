@@ -1,4 +1,4 @@
-package com.pokezon.gameclient;
+package com.pokezon.util;
 
 public final class SlowTyper {
     public static void print(String input){
@@ -7,7 +7,7 @@ public final class SlowTyper {
             System.out.print(input.charAt(i));
             try
             {
-                Thread.sleep(75);
+                Thread.sleep(40);
             }
             catch (InterruptedException ie)
             {
@@ -16,5 +16,6 @@ public final class SlowTyper {
 
 
         }
+        System.out.print("\n");
     }
 }
