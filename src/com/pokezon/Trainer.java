@@ -48,9 +48,12 @@ public class Trainer {
         return currentPokezon;
     }
 
-
     public void setCurrentPokezon(Pokezon currentPokezon) {
         this.currentPokezon = currentPokezon;
+    }
+
+    public void setCurrentPokezon(int choice) {
+        this.currentPokezon = pokezonTeam[choice];
     }
 
     public int getNumWins() {
