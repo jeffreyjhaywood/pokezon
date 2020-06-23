@@ -4,9 +4,10 @@ public abstract class Battle {
     // BATTLE INSTANCE VARIABLES
     private Trainer player;
     private double xpForWin;
-    private boolean battleHappening;
     private boolean isBattleOver = false;
     private int numRounds;
+    private Pokezon playerPokezon;
+    private Pokezon enemyPokezon;
     // BATTLE CONSTANTS
     public final double BASE_XP = 10.0;
 
@@ -49,6 +50,22 @@ public abstract class Battle {
 
     public void setNumRounds(int numRounds) {
         this.numRounds = numRounds;
+    }
+
+    public Pokezon getPlayerPokezon() {
+        return playerPokezon;
+    }
+
+    public void setPlayerPokezon(Pokezon playerPokezon) {
+        this.playerPokezon = playerPokezon;
+    }
+
+    public Pokezon getEnemyPokezon() {
+        return enemyPokezon;
+    }
+
+    public void setEnemyPokezon(Pokezon enemyPokezon) {
+        this.enemyPokezon = enemyPokezon;
     }
 
     @Override
