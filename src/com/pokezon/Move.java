@@ -1,52 +1,63 @@
 package com.pokezon;
 
 public class Move {
-    public static String name;
-    public static String type;
-    public static int baseAttack;
-    public static int Mana;
-    public static int CurrentMana;
+    private final int BASE_DAMAGE = 10;
+    private String name;
+    private PokeType type;
+    private int mana;
+    private int currentMana;
+
+    public double damageCalculator(PokeType enemyWeakness){
+        double damage = BASE_DAMAGE;
+        if (enemyWeakness == type){
+            damage *= 2;
+        }
+        return damage;
+    }
+
 
     //move getters and setter
     public String getName() {
-        return name;
+        return this.name;
     }
+
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public PokeType getType() {
+        return this.type;
     }
 
-    public void setType(String type) {
+    public void setType(PokeType type) {
         this.type = type;
     }
 
-    public int getbaseAttack() {
-        return baseAttack;
-    }
-
-    public void setbaseAttack(int baseAttack) {
-        this.baseAttack = baseAttack;
-    }
-
     public int getMana() {
-        return Mana;
+        return this.mana;
     }
 
     public void setMana(int Mana) {
-        this.Mana = Mana;
+        this.mana = Mana;
     }
 
     public int getCurrentMana() {
-        return CurrentMana;
+        return this.currentMana;
     }
 
     public void setCurrentMana(int CurrentMana) {
-        this.CurrentMana = CurrentMana;
+        this.currentMana = CurrentMana;
     }
+
+
+
+
+
+
+
+
+
 
 
 }
