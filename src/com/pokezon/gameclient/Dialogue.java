@@ -1,6 +1,7 @@
 package com.pokezon.gameclient;
 
 import com.pokezon.*;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.Scanner;
 
@@ -89,6 +90,15 @@ public final class Dialogue {
         Thread.sleep(TEXT_SPEED);
     }
 
+    public static void battleDiagnosticsDialogue(Battle battle) {
+        System.out.println(battle.getPlayerPokezon().getName()
+                + " current HP: "
+                + battle.getPlayerPokezon().getCurrentHealth());
+        System.out.println(battle.getEnemyPokezon().getName()
+                + " current HP: "
+                + battle.getEnemyPokezon().getCurrentHealth());
+    }
+
     public static int battleChoiceDialogue() throws Exception { // Pass in a Battle as a parameter
         System.out.println("What would you like to do?");
         Thread.sleep(TEXT_SPEED);
@@ -101,13 +111,14 @@ public final class Dialogue {
 
     public static int attackChoiceDialogue(Battle battle) throws Exception {
         System.out.println("Choose an attack!");
-        Thread.sleep(TEXT_SPEED);
-        System.out.println("1. Tackle");
-        System.out.println("2. Water Gun");
 
-//        for (Move move : battle.getPlayer().getCurrentPokezon().getKnownMoves()) {
-//            System.out.println(move.getName());
-//        }
+        int i = 0;
+        for (Move move : battle.getPlayer().getCurrentPokezon().getKnownMoves()) {
+            if (move != null) {
+                i++;
+                System.out.println(i + ". " + move.getName());
+            }
+        }
 
         return input.nextInt();
     }
@@ -126,6 +137,10 @@ public final class Dialogue {
         }
 
         return input.nextInt();
+    }
+
+    public static void winDialogue() throws Exception {
+        System.out.println("You have won the battle!");
     }
 
     public static void lossDialogue() throws Exception {

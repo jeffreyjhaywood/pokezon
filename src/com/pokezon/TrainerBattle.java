@@ -28,7 +28,12 @@ public class TrainerBattle extends Battle {
 
     public void setEnemyTrainer() {
         // Generate Random enemyTrainer - this is just an example
-        this.enemyTrainer = (Math.random() < .5) ? new Trainer("Bill") : new Trainer("Smith");
+        Pokezon tempSquirtle = new Pokezon("Squirtle", PokeType.WATER, PokeType.GRASS);
+        Pokezon tempBulbasaur = new Pokezon("Bulbasaur", PokeType.GRASS, PokeType.FIRE);
+        Move move = new Move("Tackle", PokeType.NORMAL, 20);
+        tempSquirtle.setMove(move);
+        tempBulbasaur.setMove(move);
+        this.enemyTrainer = (Math.random() < .5) ? new Trainer("Bill", tempSquirtle) : new Trainer("Smith", tempBulbasaur);
     }
 
     public void setEnemyTrainer(Trainer enemyTrainer){
