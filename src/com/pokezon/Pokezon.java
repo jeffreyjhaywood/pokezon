@@ -14,7 +14,7 @@ public class Pokezon {
     private double xpToNextLevel = 10;
     private double maxHealth = 20;
     private double currentHealth = maxHealth;
-    private Move[] knownMoves;
+    private Move[] knownMoves = new Move[4];
     private Move[] learnableMoves;
     private boolean isCapturable = false;
     private boolean isFainted = false;
@@ -33,6 +33,12 @@ public class Pokezon {
         level++;
         setMaxHealth();
         setXPToNextLevel();
+    }
+
+    public void useMove(int choice, Pokezon enemy) {
+        //double damage = knownMoves[choice].damageCalculator(enemyType);
+        double damage = 10;
+        enemy.takeDamage(damage);
     }
 
     public void takeDamage(double incomingDamage) {
@@ -120,6 +126,10 @@ public class Pokezon {
         else {
             this.currentHealth = currentHealth;
         }
+    }
+
+    public void setKnownMoves(Move[] knownMoves) {
+        this.knownMoves = knownMoves;
     }
 
     @Override
