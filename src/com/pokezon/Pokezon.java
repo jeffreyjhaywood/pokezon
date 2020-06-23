@@ -128,7 +128,7 @@ public class Pokezon {
         return this.currentHealth;
     }
 
-    private void setCurrentHealth(double currentHealth) {
+    public void setCurrentHealth(double currentHealth) {
         if (currentHealth <= 0) {
             this.currentHealth = 0;
             isFainted = true;
