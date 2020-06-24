@@ -10,21 +10,5 @@ public class Art {
         while (scanner.hasNextLine()){
             System.out.println(scanner.nextLine());
         }
-
-        String input;
-        do {
-            System.out.println("Type Enter to begin or Exit to terminate");
-            Scanner scanner1 = new Scanner(System.in);
-            input = scanner1.nextLine();
-            input = input.toLowerCase();
-            switch (input){
-                case "exit":
-                    return;
-                case "enter":
-                    break;
-                default:
-                    System.out.println("Check your spelling");
-            }
-        }while (!input.equals("enter"));
     }
 }
