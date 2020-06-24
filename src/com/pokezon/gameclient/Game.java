@@ -2,11 +2,15 @@ package com.pokezon.gameclient;
 
 import com.pokezon.*;
 import com.pokezon.util.Dialogue;
+import com.pokezon.util.Sound;
 
 public class Game {
     private static final int WIN_CONDITION = 5;
 
     public void begin() {
+        Thread soundThread = new Thread(new Sound()); // will run at the same time in it's own thread
+        soundThread.start();
+
         String playerName = Dialogue.introDialogue();
         Trainer player = new Trainer(playerName);
         Trainer rivalPlayer = new Trainer("Jay");
