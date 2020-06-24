@@ -11,10 +11,8 @@ import java.io.File;
     soundThread.start();
  */
 public class Sound implements Runnable {
-
     @Override
-    public void run(){
-
+    public void run() {
         File myLocalFile = new File("sound.wav");
 
         try{
@@ -22,11 +20,9 @@ public class Sound implements Runnable {
             Clip mySound = AudioSystem.getClip();
             mySound.open(myLocalMp3);
             mySound.start();
-            Thread.sleep(14000);
+            Thread.sleep(6000);
         }catch (Exception e){
             System.err.println("Error with mySoundMethod");
         }
-
     }
-
 }

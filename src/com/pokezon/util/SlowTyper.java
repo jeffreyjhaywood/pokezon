@@ -2,8 +2,7 @@ package com.pokezon.util;
 
 public final class SlowTyper {
     public static void print(String input){
-        for(int i = 0; i < input.length(); i++)
-        {
+        for(int i = 0; i < input.length(); i++) {
             System.out.print(input.charAt(i));
             try
             {
@@ -11,7 +10,7 @@ public final class SlowTyper {
             }
             catch (InterruptedException ie)
             {
-                System.out.println("redo please");
+                System.out.println("Interrupted Exception");
             }
         }
         System.out.print("\n");

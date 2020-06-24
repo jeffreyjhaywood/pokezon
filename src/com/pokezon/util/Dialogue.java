@@ -5,7 +5,6 @@ import com.pokezon.*;
 import java.util.Scanner;
 
 public final class Dialogue {
-    private static final int TEXT_SPEED = 0;
     private static final String PROFESSOR_NAME = "Prof. Bezos: ";
     static Scanner input = new Scanner(System.in);
 
@@ -59,7 +58,6 @@ public final class Dialogue {
                 SlowTyper.print("Are you kidding me? I'm offering you a free Pokezon and you can't just give the correct input?");
             }
         }
-
 
         return choice;
     }
@@ -147,9 +145,8 @@ public final class Dialogue {
         SlowTyper.print("Choose an attack!");
 
         int choice = 0;
-        boolean acceptdInput = false;
-
-        while (!acceptdInput) {
+        boolean acceptedInput = false;
+        while (!acceptedInput) {
             int i = 0;
             for (Move move : battle.getPlayer().getCurrentPokezon().getKnownMoves()) {
                 if (move != null) {
@@ -159,7 +156,7 @@ public final class Dialogue {
             }
             choice = input.nextInt();
             if (choice >= 1 && choice <= i) {
-                acceptdInput = true;
+                acceptedInput = true;
             }
             else {
                 SlowTyper.print("Choose a valid selection!");
@@ -174,7 +171,6 @@ public final class Dialogue {
 
         int choice = 0;
         boolean acceptedInput = false;
-
         while (!acceptedInput) {
             int i = 0;
 

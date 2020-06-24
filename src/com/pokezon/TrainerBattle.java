@@ -13,7 +13,6 @@ public class TrainerBattle extends Battle {
         setEnemyTrainer(enemyTrainer);
     }
 
-
     // Business methods
     @Override
     public void giveXpForWin() {
@@ -21,18 +20,19 @@ public class TrainerBattle extends Battle {
     }
 
     // TrainerBattle Subclass Getters And Setters
-
     public Trainer getEnemyTrainer() {
         return enemyTrainer;
     }
 
     public void setEnemyTrainer() {
         // Generate Random enemyTrainer - this is just an example
-        Pokezon tempSquirtle = new Pokezon("Squirtle", PokeType.WATER, PokeType.GRASS);
-        Pokezon tempBulbasaur = new Pokezon("Bulbasaur", PokeType.GRASS, PokeType.FIRE);
+        Pokezon tempSquirtle = new Pokezon("Squirtle", PokeType.WATER);
+        Pokezon tempBulbasaur = new Pokezon("Bulbasaur", PokeType.GRASS);
+
         Move move = new Move("Tackle", PokeType.NORMAL, 20);
         tempSquirtle.setMove(move);
         tempBulbasaur.setMove(move);
+
         this.enemyTrainer = (Math.random() < .5) ? new Trainer("Bill", tempSquirtle) : new Trainer("Smith", tempBulbasaur);
     }
 
@@ -40,4 +40,10 @@ public class TrainerBattle extends Battle {
         this.enemyTrainer = enemyTrainer;
     }
 
+    @Override
+    public String toString() {
+        return "TrainerBattle{" +
+                "enemyTrainer=" + enemyTrainer +
+                "} " + super.toString();
+    }
 }

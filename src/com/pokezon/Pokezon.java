@@ -21,6 +21,14 @@ public class Pokezon {
     private boolean isCapturable = false;
     private boolean isFainted = false;
 
+    // Constructors
+    public Pokezon() {
+    }
+
+    public Pokezon(String name, PokeType type) {
+        setName(name);
+        setType(type);
+    }
 
     // Business Methods
     public void addXP(double battleXP) {
@@ -39,7 +47,7 @@ public class Pokezon {
 
     public void useMove(int choice, Pokezon enemy) {
         choice -= 1;
-        double damage = knownMoves[choice].damageCalculator(enemy.getType());
+        double damage = knownMoves[choice].damageCalculator(enemy.getWeakness());
         System.out.println(getName() + " used " + knownMoves[choice].getName() + "!");
         enemy.takeDamage(damage);
     }
@@ -48,16 +56,6 @@ public class Pokezon {
         double newHealthValue = getCurrentHealth() - incomingDamage;
         System.out.println(getName() + " took " + incomingDamage + " damage!");
         setCurrentHealth(newHealthValue);
-    }
-
-    // Constructors ( Coming Soon )
-    public Pokezon() {
-
-    }
-
-    public Pokezon(String name, PokeType type, PokeType weakness) {
-        setName(name);
-        setType(type);
     }
 
     // Getters/Setters
@@ -163,6 +161,10 @@ public class Pokezon {
 
     public boolean isFainted() {
         return this.isFainted;
+    }
+
+    public void setFainted(boolean fainted) {
+        this.isFainted = fainted;
     }
 
     @Override

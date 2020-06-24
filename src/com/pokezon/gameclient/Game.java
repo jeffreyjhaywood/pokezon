@@ -1,7 +1,6 @@
 package com.pokezon.gameclient;
 
 import com.pokezon.*;
-import com.pokezon.util.Art;
 import com.pokezon.util.Dialogue;
 import com.pokezon.util.Sound;
 
@@ -13,11 +12,12 @@ public class Game {
         soundThread.start();
         Dialogue.titleScreenDialogue();
 
+        // Ask player their name and instantiate their trainer and enemy rival objects
         String playerName = Dialogue.introDialogue();
         Trainer player = new Trainer(playerName);
         Trainer rivalPlayer = new Trainer("Jay");
 
-        // Create player's pokezon and assign its initial 2 moves to it
+        // Create player's Pokezon and assign its initial 2 moves to it
         Pokezon pokezon;
         Move move1;
         Move move2 = new Move("Tackle", PokeType.NORMAL, 20);
@@ -26,21 +26,21 @@ public class Game {
 
         switch (pokezonChoice) {
             case 1:
-                pokezon = new Pokezon("Charmander", PokeType.FIRE, PokeType.WATER);
+                pokezon = new Pokezon("Charmander", PokeType.FIRE);
                 move1 = new Move("Ember", PokeType.FIRE, 20);
                 pokezon.setMove(move1);
                 pokezon.setMove(move2);
                 break;
 
             case 2:
-                pokezon = new Pokezon("Bulbasaur", PokeType.GRASS, PokeType.FIRE);
+                pokezon = new Pokezon("Bulbasaur", PokeType.GRASS);
                 move1 = new Move("Vine Whip", PokeType.GRASS, 20);
                 pokezon.setMove(move1);
                 pokezon.setMove(move2);
                 break;
 
             case 3:
-                pokezon = new Pokezon("Squirtle", PokeType.WATER, PokeType.GRASS);
+                pokezon = new Pokezon("Squirtle", PokeType.WATER);
                 move1 = new Move("Water Gun", PokeType.WATER, 20);
                 pokezon.setMove(move1);
                 pokezon.setMove(move2);
@@ -83,7 +83,7 @@ public class Game {
                 battle.setEnemyPokezon(enemyPokezon);
             }
             else {
-                Pokezon enemyPokezon = new Pokezon("Squirtle", PokeType.WATER, PokeType.GRASS);
+                Pokezon enemyPokezon = new Pokezon("Squirtle", PokeType.WATER);
                 enemyPokezon.setMove(new Move("Water Gun", PokeType.WATER, 20));
                 battle.setEnemyPokezon(enemyPokezon); // Change to create random pokezon
             }

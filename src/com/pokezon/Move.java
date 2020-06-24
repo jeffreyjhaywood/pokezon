@@ -1,12 +1,24 @@
 package com.pokezon;
 
 public class Move {
+    // Constants
     private final int BASE_DAMAGE = 10;
+
+    // Instance Variables
     private String name;
     private PokeType type;
     private int mana = 20;
     private int currentMana;
 
+    // Constructors
+    public Move(String name, PokeType type, int mana) {
+        setName(name);
+        setType(type);
+        setMana(mana);
+        setCurrentMana(mana);
+    }
+
+    // Business Methods
     public double damageCalculator(PokeType enemyWeakness){
         double damage = BASE_DAMAGE;
         if (enemyWeakness == type){
@@ -16,14 +28,7 @@ public class Move {
         return damage;
     }
 
-    public Move(String name, PokeType type, int mana) {
-        setName(name);
-        setType(type);
-        setMana(mana);
-        setCurrentMana(mana);
-    }
-
-    //move getters and setter
+    // Getters and Setters
     public String getName() {
         return this.name;
     }
@@ -44,28 +49,17 @@ public class Move {
         return this.mana;
     }
 
-    public void setMana(int Mana) {
-        this.mana = Mana;
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 
     public int getCurrentMana() {
         return this.currentMana;
     }
 
-    public void setCurrentMana(int CurrentMana) {
-        this.currentMana = CurrentMana;
+    public void setCurrentMana(int currentMana) {
+        this.currentMana = currentMana;
     }
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
