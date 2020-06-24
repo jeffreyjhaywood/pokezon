@@ -10,8 +10,5 @@ public class Art {
         while (scanner.hasNextLine()){
             System.out.println(scanner.nextLine());
         }
-        System.out.println("Press Enter to continue");
-        Scanner scanner1 = new Scanner(System.in);
-        scanner1.nextLine();
     }
 }

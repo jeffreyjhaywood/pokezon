@@ -9,6 +9,16 @@ public final class Dialogue {
     private static final String PROFESSOR_NAME = "Prof. Bezos: ";
     static Scanner input = new Scanner(System.in);
 
+    public static void titleScreenDialogue() {
+        try {
+            Art.pokezonBanner();
+        }
+        catch (Exception e) {
+        }
+        System.out.println("Press Enter to continue...");
+        input.nextLine();
+    }
+
     public static String introDialogue() {
         String name = null;
 
