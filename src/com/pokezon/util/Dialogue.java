@@ -99,11 +99,15 @@ public final class Dialogue {
     }
 
     public static void battleDiagnosticsDialogue(Battle battle) {
-        SlowTyper.print(battle.getPlayerPokezon().getName()
-                + " current HP: "
+        SlowTyper.print(battle.getPlayerPokezon().getName() + " | "
+                + "Level: "
+                + battle.getPlayerPokezon().getLevel()
+                + " | Current HP: "
                 + battle.getPlayerPokezon().getCurrentHealth());
-        SlowTyper.print(battle.getEnemyPokezon().getName()
-                + " current HP: "
+        SlowTyper.print(battle.getEnemyPokezon().getName() + " | "
+                + "Level: "
+                + battle.getEnemyPokezon().getLevel()
+                + " | current HP: "
                 + battle.getEnemyPokezon().getCurrentHealth());
     }
 

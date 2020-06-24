@@ -65,11 +65,11 @@ public class Game {
         Battle battle;
 
         while (numWins < WIN_CONDITION) { // Game win condition is to win 5 battles, loop until 5 wins or player loses.
-            int numRounds = 0;
 
             if (numWins == 0) { // Always fight rival at the beginning of game
                 battle = new TrainerBattle(rivalPlayer);
-            } else {
+            }
+            else {
                 battle = Battle.randomBattle();
             }
             battle.setPlayer(player);
@@ -79,11 +79,13 @@ public class Game {
             if (isTrainerBattle) {
                 Pokezon enemyPokezon = ((TrainerBattle) battle).getEnemyTrainer().getCurrentPokezon();
                 battle.setEnemyPokezon(enemyPokezon);
-            } else {
+            }
+            else {
                 Pokezon enemyPokezon = new Pokezon("Squirtle", PokeType.WATER, PokeType.GRASS);
                 enemyPokezon.setMove(new Move("Water Gun", PokeType.WATER, 20));
                 battle.setEnemyPokezon(enemyPokezon); // Change to create random pokezon
             }
+            battle.getEnemyPokezon().setLevel(numWins + 1);
             Dialogue.battleStartDialogue(battle);
 
             while (!battle.isBattleOver()) { // Keep looping until the battle is over.
@@ -115,6 +117,8 @@ public class Game {
                     battle.setBattleOver(true);
                     battle.setPlayerWin(true);
                     battle.getPlayerPokezon().setCurrentHealth(battle.getPlayerPokezon().getMaxHealth());
+                    battle.giveXpForWin();
+                    battle.getPlayerPokezon().addXP(battle.getXpForWin());
                 }
 
                 // Enemy attacks player
@@ -131,12 +135,12 @@ public class Game {
                     numWins++;
                     Dialogue.winDialogue();
                     break;
-                } else if (battle.isBattleOver() && !battle.didPlayerWin()) { // Player lost the battle
+                }
+                else if (battle.isBattleOver() && !battle.didPlayerWin()) { // Player lost the battle
                     Dialogue.lossDialogue();
                     System.exit(0); // Quits the game
                 }
 
-                numRounds++;
             }
         }
     }
