@@ -10,12 +10,21 @@ public final class Dialogue {
     static Scanner input = new Scanner(System.in);
 
     public static String introDialogue() {
-        String name;
+        String name = null;
 
         SlowTyper.print(PROFESSOR_NAME + "Hello and welcome to the wonderful world of Pokezon!");
         SlowTyper.print(PROFESSOR_NAME + "I'm Prof. Bezos, what's your name?");
 
-        name = input.nextLine();
+        boolean acceptedInput = false;
+        while (!acceptedInput) {
+            name = input.nextLine();
+            if (name != null && !name.equals("")) {
+                acceptedInput = true;
+            }
+            else {
+                SlowTyper.print("Enter a valid name, dummy.");
+            }
+        }
 
         SlowTyper.print(PROFESSOR_NAME + name + "? What a wonderful name!");
         SlowTyper.print(PROFESSOR_NAME + "Hey... how would you like a Pokezon of your very own?");
@@ -25,11 +34,23 @@ public final class Dialogue {
 
     public static int chooseFirstPokezonDialogue() {
         SlowTyper.print(PROFESSOR_NAME + "You can choose one of these 3 starter Pokezon!");
-        System.out.println("1. Charmander");
-        System.out.println("2. Bulbasaur");
-        System.out.println("3. Squirtle");
 
-        int choice = input.nextInt();
+        int choice = 0;
+        boolean acceptedInput = false;
+        while (!acceptedInput) {
+            System.out.println("1. Charmander");
+            System.out.println("2. Bulbasaur");
+            System.out.println("3. Squirtle");
+            choice = input.nextInt();
+            if (choice >= 1 && choice <= 3) {
+                acceptedInput = true;
+            }
+            else {
+                SlowTyper.print("Are you kidding me? I'm offering you a free Pokezon and you can't just give the correct input?");
+            }
+        }
+
+
         return choice;
     }
 
@@ -89,40 +110,77 @@ public final class Dialogue {
     public static int battleChoiceDialogue() { // Pass in a Battle as a parameter
         System.out.println("What would you like to do?");
 
-        System.out.println("1. Attack");
-        System.out.println("2. Switch Pokezon");
-        System.out.println("3. Quit Game");
+        boolean acceptedInput = false;
+        int choice = 0;
+        while (!acceptedInput) {
+            System.out.println("1. Attack");
+            System.out.println("2. Switch Pokezon");
+            System.out.println("3. Quit Game");
+            choice = input.nextInt();
 
-        return input.nextInt();
+            if (choice >= 1 && choice <= 3) {
+                acceptedInput = true;
+            }
+            else {
+                SlowTyper.print("There are only three options...");
+            }
+        }
+
+        return choice;
     }
 
     public static int attackChoiceDialogue(Battle battle) {
         System.out.println("Choose an attack!");
 
-        int i = 0;
-        for (Move move : battle.getPlayer().getCurrentPokezon().getKnownMoves()) {
-            if (move != null) {
-                i++;
-                System.out.println(i + ". " + move.getName());
+        int choice = 0;
+        boolean acceptdInput = false;
+
+        while (!acceptdInput) {
+            int i = 0;
+            for (Move move : battle.getPlayer().getCurrentPokezon().getKnownMoves()) {
+                if (move != null) {
+                    i++;
+                    System.out.println(i + ". " + move.getName());
+                }
+            }
+            choice = input.nextInt();
+            if (choice >= 1 && choice <= i) {
+                acceptdInput = true;
+            }
+            else {
+                SlowTyper.print("Choose a valid selection!");
             }
         }
 
-        return input.nextInt();
+        return choice;
     }
 
     public static int pokezonChoiceDialogue(Battle battle) {
         System.out.println("Choose one of your Pokezon!");
 
-        int i = 0;
+        int choice = 0;
+        boolean acceptedInput = false;
 
-        for (Pokezon pokezon : battle.getPlayer().getPokezonTeam()) {
-            i++;
-            if (pokezon != null) {
-                System.out.println(i + ". " + pokezon.getName());
+        while (!acceptedInput) {
+            int i = 0;
+
+            for (Pokezon pokezon : battle.getPlayer().getPokezonTeam()) {
+                i++;
+                if (pokezon != null) {
+                    System.out.println(i + ". " + pokezon.getName());
+                }
+            }
+            choice = input.nextInt();
+
+            if (choice >= 1 && choice < i) {
+                acceptedInput = true;
+            }
+            else {
+                SlowTyper.print("Enter a valid input!");
             }
         }
 
-        return input.nextInt();
+        return choice;
     }
 
     public static void winDialogue() {

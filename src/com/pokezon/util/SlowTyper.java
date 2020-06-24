@@ -7,14 +7,12 @@ public final class SlowTyper {
             System.out.print(input.charAt(i));
             try
             {
-                Thread.sleep(40);
+                Thread.sleep(0);
             }
             catch (InterruptedException ie)
             {
                 System.out.println("redo please");
             }
-
-
         }
         System.out.print("\n");
     }

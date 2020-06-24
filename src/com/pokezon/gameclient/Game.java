@@ -87,18 +87,19 @@ public class Game {
 
                 int battleChoice = Dialogue.battleChoiceDialogue();
                 switch (battleChoice) {
-                    case 1:
+                    case 1: // Player chose to attack
                         int moveChoice = Dialogue.attackChoiceDialogue(battle);
                         battle.getPlayerPokezon().useMove(moveChoice, battle.getEnemyPokezon());
                         break;
 
-                    case 2:
-//                        player.setCurrentPokezon(Dialogue.pokezonChoiceDialogue(battle));
-                        Dialogue.pokezonChoiceDialogue(battle);
-                        System.out.println(player.getName() + " has chosen " + player.getCurrentPokezon().getName() + "!");
+                    case 2: // Player chose to switch to another Pokezon
+                        int switchedPokezonChoice = Dialogue.pokezonChoiceDialogue(battle);
+//                        Pokezon switchedPokezon = player.getPokezon(switchedPokezonChoice); // Add public Pokezon getPokezon(int choice) to Trainer
+//                        player.setCurrentPokezon(switchedPokezon);
+//                        System.out.println(player.getName() + " has chosen " + player.getCurrentPokezon().getName() + "!");
                         break;
 
-                    case 3:
+                    case 3: // Player chose to quit the game
                         Dialogue.quitGameDialogue();
                         System.exit(0);
                         break;
