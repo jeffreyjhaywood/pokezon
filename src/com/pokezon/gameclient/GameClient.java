@@ -7,7 +7,7 @@ public class GameClient {
             game.begin();
         }
         catch (Exception e) {
-            System.out.println("Game failed to start.");
+            System.out.println("Game has crashed. You probably gave a bad input.");
         }
     }
 }

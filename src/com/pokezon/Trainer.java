@@ -3,7 +3,6 @@ package com.pokezon;
 import java.util.*;
 
 public class Trainer {
-
     // INSTANCE VARIABLES
     private String name;
     private Pokezon[] pokezonTeam;
@@ -12,7 +11,6 @@ public class Trainer {
     private int numFaintedPokezon = 0;
 
     // CONSTRUCTORS
-
     // Create Trainer after user input name
     public Trainer(String name) {
         setName(name);
@@ -28,7 +26,6 @@ public class Trainer {
         this.currentPokezon = pokezonTeam[choice];
     }
 
-    //
     public void chooseMove(int choice, Pokezon enemy) {
         currentPokezon.useMove(choice, enemy);
     }
@@ -83,24 +80,9 @@ public class Trainer {
         return "Trainer{" +
                 "name='" + name + '\'' +
                 ", pokezonTeam=" + Arrays.toString(pokezonTeam) +
-                ", numWins=" + numWins +
                 ", currentPokezon=" + currentPokezon +
+                ", numWins=" + numWins +
+                ", numFaintedPokezon=" + numFaintedPokezon +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Trainer trainer = (Trainer) o;
-        return numWins == trainer.numWins && name.equals(trainer.name) &&
-                Arrays.equals(pokezonTeam, trainer.pokezonTeam);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(name, numWins);
-        result = 31 * result + Arrays.hashCode(pokezonTeam);
-        return result;
     }
 }

@@ -9,6 +9,7 @@ public abstract class Battle {
     private int numRounds;
     private Pokezon playerPokezon;
     private Pokezon enemyPokezon;
+
     // BATTLE CONSTANTS
     public final double BASE_XP = 10.0;
 
@@ -82,6 +83,11 @@ public abstract class Battle {
         return "Battle{" +
                 "player=" + player +
                 ", xpForWin=" + xpForWin +
+                ", isBattleOver=" + isBattleOver +
+                ", didPlayerWin=" + didPlayerWin +
+                ", numRounds=" + numRounds +
+                ", playerPokezon=" + playerPokezon +
+                ", enemyPokezon=" + enemyPokezon +
                 '}';
     }
 }
