@@ -23,7 +23,6 @@ public class Move {
         double damage = BASE_DAMAGE;
         if (enemyWeakness == type){
             damage *= 2;
-
         }
         return damage;
     }
@@ -59,6 +58,16 @@ public class Move {
 
     public void setCurrentMana(int currentMana) {
         this.currentMana = currentMana;
+    }
+
+    @Override
+    public String toString() {
+        return "Move{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", mana=" + mana +
+                ", currentMana=" + currentMana +
+                '}';
     }
 }
 
