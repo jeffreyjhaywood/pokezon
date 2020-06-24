@@ -23,7 +23,7 @@ public class Pokezon {
 
 
     // Business Methods
-    public void addXP(int battleXP) {
+    public void addXP(double battleXP) {
         setXP(getXP() + battleXP);
 
         while (getXP() >= getXPToNextLevel()) {
@@ -97,6 +97,10 @@ public class Pokezon {
 
     public int getLevel() {
         return this.level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public double getXP() {
