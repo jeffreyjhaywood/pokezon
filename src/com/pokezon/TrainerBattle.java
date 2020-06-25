@@ -1,3 +1,11 @@
+/**
+ * TrainerBattle are a sublcass of Battle where the player is battling
+ * against another Trainer.
+ *
+ * @author Jeffrey J. Haywood, Justin Lamb, Marcelo Nazario
+ * @version 0.9
+ * @since 2020-06-19
+ */
 package com.pokezon;
 
 public class TrainerBattle extends Battle {
@@ -14,6 +22,9 @@ public class TrainerBattle extends Battle {
     }
 
     // Business methods
+    /**
+     * Calculates the amount of xp player Pokezon will receive for winning.
+     */
     @Override
     public void giveXpForWin() {
         setXpForWin(BASE_XP * 2.0);
@@ -24,6 +35,10 @@ public class TrainerBattle extends Battle {
         return enemyTrainer;
     }
 
+    /**
+     * Creates a random enemy trainer that player will battle.
+     *
+     */
     public void setEnemyTrainer() {
         // Generate Random enemyTrainer - this is just an example
         Pokezon tempSquirtle = new Pokezon("Squirtle", PokeType.WATER);

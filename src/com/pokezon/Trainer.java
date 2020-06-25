@@ -1,3 +1,13 @@
+/**
+ * Trainer is what the user will be playing as.
+ * A trainer has a team of Pokezon, and will choose what Moves for their Pokezon to use in battle.
+ *
+ * Can only have a maximum of 3 Pokezon.
+ *
+ * @author Jeffrey J. Haywood, Justin Lamb, Marcelo Nazario
+ * @version 0.9
+ * @since 2020-06-19
+ */
 package com.pokezon;
 
 import java.util.*;
@@ -19,21 +29,46 @@ public class Trainer {
         setName(name);
     }
 
+    /**
+     * Constructor for Trainer.
+     *
+     * @param name The Trainer's name.
+     * @param currentPokezon Pokezon to be added to the Trainer's team.
+     */
     public Trainer(String name, Pokezon currentPokezon) {
         this(name);
         addPokezonToTeam(currentPokezon);
     }
 
     // BUSINESS METHODS
+
+    /**
+     * Send one of the Pokezon on the Trainer's team out to battle.
+     *
+     * @param choice Integer representation of the selected Pokezon to switch to.
+     * @return The Pokezon at the chosen element of the array.
+     */
     public Pokezon choosePokezon(int choice) {
         choice -= 1;
         return pokezonTeam[choice];
     }
 
+    /**
+     * Chooses a Move of the current battling Pokezon.
+     *
+     * @param choice Integer representation of selected Move
+     * @param playerPokezon The Pokezon currently battling.
+     * @param enemy The enemy Pokezon the move will be used against.
+     */
     public void chooseMove(int choice, Pokezon playerPokezon, Pokezon enemy) {
         playerPokezon.useMove(choice, enemy);
     }
 
+    /**
+     * Adds given Pokezon to the Trainer's team.
+     *
+     * @param pokezon Pokezon to be added to the trainer's team.
+     */
     public void addPokezonToTeam(Pokezon pokezon) {
         int i = 0;
         for (Pokezon availablePokezon : pokezonTeam) {

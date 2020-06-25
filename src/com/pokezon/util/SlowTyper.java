@@ -1,3 +1,12 @@
+/**
+ * SlowTyper has methods to display text in a slower, retro fashion.
+ *
+ * Makes it easier for the user to read dialogue.
+ *
+ * @author Jeffrey J. Haywood, Justin Lamb, Marcelo Nazario
+ * @version 0.9
+ * @since 2020-06-19
+ */
 package com.pokezon.util;
 
 import java.util.Scanner;
@@ -7,6 +16,12 @@ public final class SlowTyper {
     private static final int LOADING_MILLIS = 115;
     private static Scanner enterToContinue = new Scanner(System.in);
 
+    /**
+     * Slowly prints a string character-by-character
+     * Makes it so user needs to press enter to continue
+     *
+     * @param input The String to be slowly typed.
+     */
     public static void print(String input){
         for(int i = 0; i < input.length(); i++) {
             System.out.print(input.charAt(i));
@@ -38,6 +53,9 @@ public final class SlowTyper {
         System.out.print("\n");
     }
 
+    /**
+     * Displays a loading bar.
+     */
     public static void loadingBar(){
         String bar = "|||||||||||||||||||||||||||||||||||||||||||||:100%";
         for(int i = 0; i < bar.length(); i++) {

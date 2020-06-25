@@ -1,3 +1,12 @@
+/**
+ * Battle is the "playing field" for every battle that happens.
+ * There will always be 2 Pokezon battling each other (playerPokezon and enemyPokezon)
+ *
+ * @author Jeffrey J. Haywood, Justin Lamb, Marcelo Nazario
+ * @version 0.9
+ * @since 2020-06-19
+ */
+
 package com.pokezon;
 
 public abstract class Battle {
@@ -14,11 +23,21 @@ public abstract class Battle {
     public final double BASE_XP = 10.0;
 
     // BATTLE BUSINESS METHODS
+
+    /**
+     * Randomly creates either a TrainerBattle or a WildBattle
+     *
+     * @return Randomly generated TrainerBattle or WildBattle
+     */
     public static Battle randomBattle() {
         // Need to downcast in client to access subclass-only properties
         return (Math.random() < .5) ? new TrainerBattle() : new WildBattle();
     }
 
+    /**
+     * Calculates amount of xp for winning a battle.
+     * Base amount if WildBattle, double base amount if Trainer battle.
+     */
     public abstract void giveXpForWin();
 
     // BATTLE GETTERS AND SETTERS
