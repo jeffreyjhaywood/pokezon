@@ -76,6 +76,12 @@ public final class Dialogue {
             SlowTyper.print("1. Charmander",0);
             SlowTyper.print("2. Bulbasaur",0);
             SlowTyper.print("3. Squirtle",0);
+
+            while (!input.hasNextInt()){
+                System.out.println("Enter 1, 2, or 3!");
+                input.next();
+            }
+
             choice = input.nextInt();
             if (choice >= 1 && choice <= 3) {
                 acceptedInput = true;
@@ -199,6 +205,12 @@ public final class Dialogue {
             SlowTyper.print("1. Attack",0);
             SlowTyper.print("2. Switch Pokezon",0);
             SlowTyper.print("3. Quit Game",0);
+
+            while (!input.hasNextInt()){
+                System.out.println("Enter 1, 2, or 3!");
+                input.next();
+            }
+
             choice = input.nextInt();
 
             if (choice >= 1 && choice <= 3) {
@@ -231,6 +243,12 @@ public final class Dialogue {
                     SlowTyper.print(i + ". " + move.getName(),0);
                 }
             }
+
+            while (!input.hasNextInt()){
+                System.out.println("Enter 1, or 2!");
+                input.next();
+            }
+
             choice = input.nextInt();
             if (choice >= 1 && choice <= i) {
                 acceptedInput = true;
