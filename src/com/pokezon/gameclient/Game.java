@@ -65,20 +65,13 @@ public class Game {
         }
 
         // Add chosen Pokezon to player team
-//        Pokezon[] pokezonTeam = new Pokezon[3];
-//        pokezonTeam[0] = pokezon;
         player.addPokezonToTeam(playerFirstPokezon);
-//        player.setPokezonTeam(pokezonTeam);
-//        player.setCurrentPokezon(pokezonTeam[0]);
+
 
         // Add rival's chosen Pokezen to rival team
-//        Pokezon[] rivalPokezonTeam = new Pokezon[3];
         Pokezon rivalFirstPokezon = Dialogue.meetingRivalDialogue(player, rivalPlayer, playerFirstPokezon);
         rivalFirstPokezon.setMove(move2);
         rivalPlayer.addPokezonToTeam(rivalFirstPokezon);
-//        rivalPokezonTeam[0].setMove(move2);
-//        rivalPlayer.setPokezonTeam(rivalPokezonTeam);
-//        rivalPlayer.setCurrentPokezon(rivalPokezonTeam[0]);
 
         int numWins = 0;
         Battle battle;
