@@ -1,3 +1,12 @@
+/**
+ * Game holds all of the game's story/sequence logic.
+ * It calls methods from Dialogue to display dialogue, creates Trainer objects that represent
+ * the player, rival, and other enemies.
+ *
+ * @author Jeffrey J. Haywood, Justin Lamb, Marcelo Nazario
+ * @version 0.9
+ * @since 2020-06-19
+ */
 package com.pokezon.gameclient;
 
 import com.pokezon.*;
@@ -7,6 +16,11 @@ import com.pokezon.util.Sound;
 public class Game {
     private static final int WIN_CONDITION = 5;
 
+    /**
+     * Instantiates necessary objects, makes method calls to Dialogue and interacts with
+     * all objects in sequential order to progress through the game.
+     *
+     */
     public void begin() {
 //        Thread soundThread = new Thread(new Sound()); // will run at the same time in it's own thread
 //        soundThread.start();

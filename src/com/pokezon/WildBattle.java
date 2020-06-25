@@ -1,3 +1,11 @@
+/**
+ * WildBattle is a sublcass of battle where the player were battle
+ * against only ONE enemy Pokezon.
+ *
+ * @author Jeffrey J. Haywood, Justin Lamb, Marcelo Nazario
+ * @version 0.9
+ * @since 2020-06-19
+ */
 package com.pokezon;
 
 public class WildBattle extends Battle{

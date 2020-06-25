@@ -1,3 +1,14 @@
+/**
+ * Pokezon will be used to battle against each other. A Trainer will
+ * choose Moves that their Pokezon knows to attack the enemy Pokezon.
+ *
+ * If Pokezon's currentHealth reaches 0, they will faint and not be usable in battle.
+ *
+ *
+ * @author Jeffrey J. Haywood, Justin Lamb, Marcelo Nazario
+ * @version 0.9
+ * @since 2020-06-19
+ */
 package com.pokezon;
 
 import com.pokezon.util.Dialogue;
@@ -28,12 +39,27 @@ public class Pokezon {
     public Pokezon() {
     }
 
+    /**
+     * Constructor for Pokezon
+     *
+     * @param name The name of the Pokezon
+     * @param type The type of the Pokezon
+     */
     public Pokezon(String name, PokeType type) {
         setName(name);
         setType(type);
     }
 
     // Business Methods
+
+    /**
+     * Adds xp to the Pokezon who won the battle.
+     *
+     * When the amount of xp received exceeds xpToNextLevel
+     * the Pokezon will level up.
+     *
+     * @param battleXP The amount of xp being added
+     */
     public void addXP(double battleXP) {
         setXP(getXP() + battleXP);
 
@@ -42,12 +68,26 @@ public class Pokezon {
         }
     }
 
+    /**
+     * Adds one level to the Pokezon's level.
+     *
+     * Increases maxHealth by 3.
+     *
+     * Increases amount of xp to get to the next level.
+     */
     private void levelUp() {
         level++;
         setMaxHealth();
         setXPToNextLevel();
     }
 
+    /**
+     * Trainer will choose a move for the Pokezon to use against enemy Pokezon,
+     * choice will be the element of the knownMoves array.
+     *
+     * @param choice Trainer move choice.
+     * @param enemy The enemy Pokezon the Move is being used against.
+     */
     public void useMove(int choice, Pokezon enemy) {
         choice -= 1;
         Dialogue.attackUsedDialog(getName(), knownMoves[choice].getName());
@@ -55,6 +95,12 @@ public class Pokezon {
         enemy.takeDamage(damage);
     }
 
+    /**
+     * Pokezon will take damage.
+     * The currentHealth - incomingDamage will be the Pokezon's new currentHealth.
+     *
+     * @param incomingDamage Amount of damage Pokezon will receive.
+     */
     public void takeDamage(double incomingDamage) {
         double newHealthValue = getCurrentHealth() - incomingDamage;
         Dialogue.tookDamageDialog(getName(), incomingDamage);
@@ -74,6 +120,12 @@ public class Pokezon {
         return this.type;
     }
 
+    /**
+     * Sets the type of the Pokezon,
+     * Will call setWeakness() to automatically set the Pokezon's weakness.
+     *
+     * @param type The Pokezon's type
+     */
     public void setType(PokeType type) {
         this.type = type;
         setWeakness();
@@ -83,6 +135,9 @@ public class Pokezon {
         return this.weakness;
     }
 
+    /**
+     * Uses the Pokezon's type to set the weakness.
+     */
     private void setWeakness() {
         switch(this.type) {
             case GRASS:
@@ -119,6 +174,9 @@ public class Pokezon {
         return this.xpToNextLevel;
     }
 
+    /**
+     * Will increase the amount of xp it takes to level up everytime Pokezon levels up.
+     */
     private void setXPToNextLevel() {
         int level = getLevel();
         this.xpToNextLevel = (level + (level * XP_PCT)) * 10;
@@ -128,6 +186,9 @@ public class Pokezon {
         return this.maxHealth;
     }
 
+    /**
+     * Adds 3 to Pokezon maxHealth
+     */
     private void setMaxHealth() {
         this.maxHealth += 3;
     }
@@ -136,16 +197,30 @@ public class Pokezon {
         return this.currentHealth;
     }
 
-    public void setCurrentHealth(double currentHealth) {
-        if (currentHealth <= 0) {
+    /**
+     * Assigns the currentHealth to be the amount passed in.
+     *
+     * If the new health value is less than 0, the Pokezon is considered to be fainted and unusable.
+     *
+     * @param newCurrentHealth The value currentHealth will be set to.
+     */
+    public void setCurrentHealth(double newCurrentHealth) {
+        if (newCurrentHealth <= 0) {
             this.currentHealth = 0;
             isFainted = true;
         }
         else {
-            this.currentHealth = currentHealth;
+            this.currentHealth = newCurrentHealth;
         }
     }
 
+    /**
+     * Will add a move to the knownMoves array.
+     *
+     * Will add the move to the first empty element in the array.
+     *
+     * @param move New move to be added to the array.
+     */
     public void setMove(Move move) { // Add move to array to first empty element
         int i = 0;
         for (Move availableMove : knownMoves) {
