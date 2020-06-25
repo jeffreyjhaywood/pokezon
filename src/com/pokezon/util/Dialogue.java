@@ -24,7 +24,7 @@ public final class Dialogue {
     public static void titleScreenDialogue() {
         try {
             Art.pokezonBanner();
-            //SlowTyper.loadingBar();
+            SlowTyper.loadingBar();
         }
         catch (Exception e) {
         }
@@ -73,9 +73,18 @@ public final class Dialogue {
         int choice = 0;
         boolean acceptedInput = false;
         while (!acceptedInput) {
-            SlowTyper.print("1. Charmander",0);
-            SlowTyper.print("2. Bulbasaur",0);
-            SlowTyper.print("3. Squirtle",0);
+            System.out.println("1. Charmander");
+            System.out.println("2. Bulbasaur");
+            System.out.println("3. Squirtle");
+
+            while (!input.hasNextInt()){
+                System.out.println("Please choose one of the given options.");
+                System.out.println("1. Charmander");
+                System.out.println("2. Bulbasaur");
+                System.out.println("3. Squirtle");
+                input.next();
+            }
+
             choice = input.nextInt();
             if (choice >= 1 && choice <= 3) {
                 acceptedInput = true;
@@ -132,12 +141,14 @@ public final class Dialogue {
      *
      * @param battle The instance of battle that player is currently fighting in.
      */
-    public static void finalBattleDialogue(Battle battle) {
-        SlowTyper.print(battle.getPlayer().getName() + "... We meet again.");
-        SlowTyper.print("My " + battle.getEnemyPokezon().getName()
+    public static void finalBattleDialogue(Battle battle, Trainer rivalPlayer) {
+        SlowTyper.print(rivalPlayer.getName() + ": "
+                +battle.getPlayer().getName() + "... We meet again.");
+        SlowTyper.print(rivalPlayer.getName() + ": "
+                + "My " + battle.getEnemyPokezon().getName()
                 + " is going to DESTROY your "
                 + battle.getPlayerPokezon().getName());
-        SlowTyper.print("Lets battle!");
+        SlowTyper.print(rivalPlayer.getName() + ": Lets battle!");
     }
 
     /**
@@ -173,12 +184,12 @@ public final class Dialogue {
      * @param battle The instance of battle the player is currently fighting in.
      */
     public static void battleDiagnosticsDialogue(Battle battle) {
-        SlowTyper.print(battle.getPlayerPokezon().getName() + " | "
+        System.out.println(battle.getPlayerPokezon().getName() + " | "
                 + "Level: "
                 + battle.getPlayerPokezon().getLevel()
                 + " | Current HP: "
                 + battle.getPlayerPokezon().getCurrentHealth());
-        SlowTyper.print(battle.getEnemyPokezon().getName() + " | "
+        System.out.println(battle.getEnemyPokezon().getName() + " | "
                 + "Level: "
                 + battle.getEnemyPokezon().getLevel()
                 + " | current HP: "
@@ -191,21 +202,30 @@ public final class Dialogue {
      * @return The option the player chose.
      */
     public static int battleChoiceDialogue() { // Pass in a Battle as a parameter
-        SlowTyper.print("What would you like to do?",0);
+        System.out.println("What would you like to do?");
 
         boolean acceptedInput = false;
         int choice = 0;
         while (!acceptedInput) {
-            SlowTyper.print("1. Attack",0);
-            SlowTyper.print("2. Switch Pokezon",0);
-            SlowTyper.print("3. Quit Game",0);
+            System.out.println("1. Attack");
+            System.out.println("2. Switch Pokezon");
+            System.out.println("3. Quit Game");
+
+            while (!input.hasNextInt()){
+                System.out.println("Please choose one of the given options.");
+                System.out.println("1. Attack");
+                System.out.println("2. Switch Pokezon");
+                System.out.println("3. Quit Game");
+                input.next();
+            }
+
             choice = input.nextInt();
 
             if (choice >= 1 && choice <= 3) {
                 acceptedInput = true;
             }
             else {
-                SlowTyper.print("There are only three options...",0);
+                System.out.println("There are only three options...");
             }
         }
 
@@ -219,7 +239,7 @@ public final class Dialogue {
      * @return The attack choice the player selected.
      */
     public static int attackChoiceDialogue(Battle battle) {
-        SlowTyper.print("Choose an attack!",0);
+        System.out.println("Choose an attack!");
 
         int choice = 0;
         boolean acceptedInput = false;
@@ -228,15 +248,21 @@ public final class Dialogue {
             for (Move move : battle.getPlayerPokezon().getKnownMoves()) {
                 if (move != null) {
                     i++;
-                    SlowTyper.print(i + ". " + move.getName(),0);
+                    System.out.println(i + ". " + move.getName());
                 }
             }
+
+            while (!input.hasNextInt()){
+                System.out.println("Please choose one of the given options.");
+                input.next();
+            }
+
             choice = input.nextInt();
             if (choice >= 1 && choice <= i) {
                 acceptedInput = true;
             }
             else {
-                SlowTyper.print("Choose a valid selection!",0);
+                System.out.println("Choose a valid selection!");
             }
         }
 
@@ -278,7 +304,7 @@ public final class Dialogue {
      * @return The choice of what Pokezon player wants to switch to.
      */
     public static int pokezonChoiceDialogue(Battle battle) {
-        SlowTyper.print("Choose one of your Pokezon!");
+        System.out.println("Choose one of your Pokezon!");
 
         int choice = 0;
         boolean acceptedInput = false;
@@ -288,20 +314,35 @@ public final class Dialogue {
             for (Pokezon pokezon : battle.getPlayer().getPokezonTeam()) {
                 i++;
                 if (pokezon != null) {
-                    SlowTyper.print(i + ". " + pokezon.getName(),0);
+                    System.out.println(i + ". " + pokezon.getName());
                 }
             }
+
+            while (!input.hasNextInt()){
+                System.out.println("Please choose one of the given options.");
+                input.next();
+            }
+
             choice = input.nextInt();
 
             if (choice >= 1 && choice < i) {
                 acceptedInput = true;
             }
             else {
-                SlowTyper.print("Enter a valid input!");
+                System.out.println("Enter a valid input!");
             }
         }
 
         return choice;
+    }
+
+    /**
+     * Displays dialogue when Pokezon faints.
+     *
+     * @param pokezonName Name of Pokezon that fainted.
+     */
+    public static void faintedDialogue(String pokezonName) {
+        SlowTyper.print(pokezonName + " has fainted.");
     }
 
     /**

@@ -208,6 +208,7 @@ public class Pokezon {
         if (newCurrentHealth <= 0) {
             this.currentHealth = 0;
             isFainted = true;
+            Dialogue.faintedDialogue(getName());
         }
         else {
             this.currentHealth = newCurrentHealth;
