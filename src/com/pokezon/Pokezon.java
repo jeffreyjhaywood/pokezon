@@ -81,15 +81,18 @@ public class Pokezon {
     }
 
     private void setWeakness() {
-        switch(getType()) {
+        switch(this.type) {
             case GRASS:
                 this.weakness = PokeType.FIRE;
+                break;
 
             case WATER:
                 this.weakness = PokeType.GRASS;
+                break;
 
             case FIRE:
                 this.weakness = PokeType.WATER;
+                break;
         }
     }
 

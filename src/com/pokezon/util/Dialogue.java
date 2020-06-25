@@ -66,18 +66,21 @@ public final class Dialogue {
         SlowTyper.print(PROFESSOR_NAME + player.getCurrentPokezon().getName() + " What a wonderful choice!");
         SlowTyper.print(PROFESSOR_NAME + "Who is that my grandson?");
 
-        Pokezon pokezon = new Pokezon();
+        Pokezon pokezon = null;
 
         switch (player.getCurrentPokezon().getName()){
             case "Bulbasaur":
-                pokezon.setName("Charmander");
+                pokezon = new Pokezon("Charmander", PokeType.FIRE);
                 break;
+
             case "Squirtle":
-                pokezon.setName("Bulbasaur");
+                pokezon = new Pokezon("Bulbasaur", PokeType.GRASS);
                 break;
+
             case "Charmander":
-                pokezon.setName("Squirtle");
+                pokezon = new Pokezon("Squirtle", PokeType.WATER);
                 break;
+
             default:
         }
 

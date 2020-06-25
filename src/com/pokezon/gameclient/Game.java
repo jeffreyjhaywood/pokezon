@@ -97,7 +97,8 @@ public class Game {
                 switch (battleChoice) {
                     case 1: // Player chose to attack
                         int moveChoice = Dialogue.attackChoiceDialogue(battle);
-                        battle.getPlayerPokezon().useMove(moveChoice, battle.getEnemyPokezon());
+                        battle.getPlayer().chooseMove(moveChoice, battle.getEnemyPokezon());
+//                        battle.getPlayerPokezon().useMove(moveChoice, battle.getEnemyPokezon());
                         break;
 
                     case 2: // Player chose to switch to another Pokezon
@@ -118,9 +119,9 @@ public class Game {
                 if (battle.getEnemyPokezon().isFainted()) {
                     battle.setBattleOver(true);
                     battle.setPlayerWin(true);
-                    battle.getPlayerPokezon().setCurrentHealth(battle.getPlayerPokezon().getMaxHealth());
                     battle.giveXpForWin();
                     battle.getPlayerPokezon().addXP(battle.getXpForWin());
+                    battle.getPlayerPokezon().setCurrentHealth(battle.getPlayerPokezon().getMaxHealth());
                 }
 
                 // Enemy attacks player
