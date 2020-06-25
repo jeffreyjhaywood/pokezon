@@ -178,6 +178,15 @@ public final class Dialogue {
         return choice;
     }
 
+    public static void attackUsedDialog(String pokezonName, String attackName){
+
+        SlowTyper.print(pokezonName + " used " + attackName + "!");
+    }
+
+    public static void tookDamageDialog(String pokezonName, double incomingDamage){
+        SlowTyper.print(pokezonName + " took " + incomingDamage + " damage!");
+    }
+
     public static int pokezonChoiceDialogue(Battle battle) {
         SlowTyper.print("Choose one of your Pokezon!");
 

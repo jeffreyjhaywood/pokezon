@@ -1,5 +1,8 @@
 package com.pokezon;
 
+import com.pokezon.util.Dialogue;
+import com.pokezon.util.SlowTyper;
+
 import java.util.Arrays;
 
 public class Pokezon {
@@ -48,13 +51,13 @@ public class Pokezon {
     public void useMove(int choice, Pokezon enemy) {
         choice -= 1;
         double damage = knownMoves[choice].damageCalculator(enemy.getWeakness());
-        System.out.println(getName() + " used " + knownMoves[choice].getName() + "!");
+        Dialogue.attackUsedDialog(getName(), knownMoves[choice].getName());
         enemy.takeDamage(damage);
     }
 
     public void takeDamage(double incomingDamage) {
         double newHealthValue = getCurrentHealth() - incomingDamage;
-        System.out.println(getName() + " took " + incomingDamage + " damage!");
+        Dialogue.tookDamageDialog(getName(), incomingDamage);
         setCurrentHealth(newHealthValue);
     }
 
