@@ -50,8 +50,8 @@ public class Pokezon {
 
     public void useMove(int choice, Pokezon enemy) {
         choice -= 1;
-        double damage = knownMoves[choice].damageCalculator(enemy.getWeakness());
         Dialogue.attackUsedDialog(getName(), knownMoves[choice].getName());
+        double damage = knownMoves[choice].damageCalculator(enemy.getWeakness());
         enemy.takeDamage(damage);
     }
 

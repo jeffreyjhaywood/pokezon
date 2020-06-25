@@ -3,13 +3,16 @@ package com.pokezon.util;
 import java.util.Scanner;
 
 public final class SlowTyper {
+    private static final int PRINT_MILLIS = 0;
+    private static final int LOADING_MILLIS = 115;
+    private static Scanner enterToContinue = new Scanner(System.in);
 
     public static void print(String input){
         for(int i = 0; i < input.length(); i++) {
             System.out.print(input.charAt(i));
             try
             {
-                Thread.sleep(30);
+                Thread.sleep(PRINT_MILLIS);
             }
             catch (InterruptedException ie)
             {
@@ -17,8 +20,7 @@ public final class SlowTyper {
             }
         }
         System.out.print("\n");
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
+        enterToContinue.nextLine();
     }
 
     public static void print(String input, int zeroForNoEnterWhenInputRequest){
@@ -26,7 +28,7 @@ public final class SlowTyper {
             System.out.print(input.charAt(i));
             try
             {
-                Thread.sleep(30);
+                Thread.sleep(PRINT_MILLIS);
             }
             catch (InterruptedException ie)
             {
@@ -42,7 +44,7 @@ public final class SlowTyper {
             System.out.print(bar.charAt(i));
             try
             {
-                Thread.sleep(115);
+                Thread.sleep(LOADING_MILLIS);
             }
             catch (InterruptedException ie)
             {

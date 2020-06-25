@@ -3,9 +3,12 @@ package com.pokezon;
 import java.util.*;
 
 public class Trainer {
+    // CONSTANTS
+    private final int TEAM_SIZE = 3;
+
     // INSTANCE VARIABLES
     private String name;
-    private Pokezon[] pokezonTeam;
+    private Pokezon[] pokezonTeam = new Pokezon[TEAM_SIZE];
     private Pokezon currentPokezon;
     private int numWins;
     private int numFaintedPokezon = 0;
@@ -18,16 +21,29 @@ public class Trainer {
 
     public Trainer(String name, Pokezon currentPokezon) {
         this(name);
-        setCurrentPokezon(currentPokezon);
+        addPokezonToTeam(currentPokezon);
     }
 
     // BUSINESS METHODS
-    public void choosePokezon(int choice) {
-        this.currentPokezon = pokezonTeam[choice];
+    public Pokezon choosePokezon(int choice) {
+        choice -= 1;
+        return pokezonTeam[choice];
     }
 
-    public void chooseMove(int choice, Pokezon enemy) {
-        currentPokezon.useMove(choice, enemy);
+    public void chooseMove(int choice, Pokezon playerPokezon, Pokezon enemy) {
+        playerPokezon.useMove(choice, enemy);
+    }
+
+    public void addPokezonToTeam(Pokezon pokezon) {
+        int i = 0;
+        for (Pokezon availablePokezon : pokezonTeam) {
+            if (availablePokezon == null) {
+                pokezonTeam[i] = pokezon;
+                return;
+            }
+            i++;
+        }
+        System.out.println("Pokezon team already full.");
     }
 
     // GETTERS AND SETTERS

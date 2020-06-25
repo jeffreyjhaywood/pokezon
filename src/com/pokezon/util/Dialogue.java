@@ -11,7 +11,7 @@ public final class Dialogue {
     public static void titleScreenDialogue() {
         try {
             Art.pokezonBanner();
-            SlowTyper.loadingBar();
+            //SlowTyper.loadingBar();
         }
         catch (Exception e) {
         }
@@ -63,13 +63,13 @@ public final class Dialogue {
         return choice;
     }
 
-    public static Pokezon meetingRivalDialogue(Trainer player, Trainer rival) {
-        SlowTyper.print(PROFESSOR_NAME + player.getCurrentPokezon().getName() + " What a wonderful choice!");
+    public static Pokezon meetingRivalDialogue(Trainer player, Trainer rival, Pokezon playerPokezon) {
+        SlowTyper.print(PROFESSOR_NAME + playerPokezon.getName() + " What a wonderful choice!");
         SlowTyper.print(PROFESSOR_NAME + "Who is that my grandson?");
 
         Pokezon pokezon = null;
 
-        switch (player.getCurrentPokezon().getName()){
+        switch (playerPokezon.getName()){
             case "Bulbasaur":
                 pokezon = new Pokezon("Charmander", PokeType.FIRE);
                 break;
@@ -85,7 +85,7 @@ public final class Dialogue {
             default:
         }
 
-        SlowTyper.print(rival.getName() + ": Oh you chose " + player.getCurrentPokezon().getName()
+        SlowTyper.print(rival.getName() + ": Oh you chose " + playerPokezon.getName()
                 + ", I'm going to choose " + pokezon.getName());
         SlowTyper.print(rival.getName() + ": Lets battle!");
 
@@ -106,7 +106,7 @@ public final class Dialogue {
 
             SlowTyper.print(trainerBattle.getEnemyTrainer().getName() + " has started a battle!");
             SlowTyper.print(trainerBattle.getEnemyTrainer().getName() + " sends out "
-                    + trainerBattle.getEnemyTrainer().getCurrentPokezon().getName());
+                    + trainerBattle.getEnemyPokezon().getName());
 
         }
         else {
@@ -115,7 +115,7 @@ public final class Dialogue {
             SlowTyper.print(wildBattle.getEnemyPokezon().getName() + " has started a battle!");
         }
 
-        SlowTyper.print(battle.getPlayer().getName() + " sends out " + battle.getPlayer().getCurrentPokezon().getName());
+        SlowTyper.print(battle.getPlayer().getName() + " sends out " + battle.getPlayerPokezon().getName());
     }
 
     public static void battleDiagnosticsDialogue(Battle battle) {
@@ -160,7 +160,7 @@ public final class Dialogue {
         boolean acceptedInput = false;
         while (!acceptedInput) {
             int i = 0;
-            for (Move move : battle.getPlayer().getCurrentPokezon().getKnownMoves()) {
+            for (Move move : battle.getPlayerPokezon().getKnownMoves()) {
                 if (move != null) {
                     i++;
                     SlowTyper.print(i + ". " + move.getName(),0);
@@ -179,8 +179,11 @@ public final class Dialogue {
     }
 
     public static void attackUsedDialog(String pokezonName, String attackName){
-
         SlowTyper.print(pokezonName + " used " + attackName + "!");
+    }
+
+    public static void superEffectiveDialogue() {
+        SlowTyper.print("Super Effective!");
     }
 
     public static void tookDamageDialog(String pokezonName, double incomingDamage){
@@ -233,7 +236,7 @@ public final class Dialogue {
     }
 
     public static void quitGameDialogue() {
-        SlowTyper.print("Game is terminated, thank you for playing!");
+        SlowTyper.print("Thank you for playing!");
     }
 
     public static void beatGameDialogue(Trainer player, Trainer rival) {
