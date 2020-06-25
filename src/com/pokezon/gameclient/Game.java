@@ -8,8 +8,8 @@ public class Game {
     private static final int WIN_CONDITION = 5;
 
     public void begin() {
-        Thread soundThread = new Thread(new Sound()); // will run at the same time in it's own thread
-        soundThread.start();
+//        Thread soundThread = new Thread(new Sound()); // will run at the same time in it's own thread
+//        soundThread.start();
         Dialogue.titleScreenDialogue();
 
         // Ask player their name and instantiate their trainer and enemy rival objects
@@ -18,7 +18,7 @@ public class Game {
         Trainer rivalPlayer = new Trainer("Jay");
 
         // Create player's Pokezon and assign its initial 2 moves to it
-        Pokezon pokezon;
+        Pokezon playerFirstPokezon;
         Move move1;
         Move move2 = new Move("Tackle", PokeType.NORMAL, 20);
 
@@ -26,42 +26,45 @@ public class Game {
 
         switch (pokezonChoice) {
             case 1:
-                pokezon = new Pokezon("Charmander", PokeType.FIRE);
+                playerFirstPokezon = new Pokezon("Charmander", PokeType.FIRE);
                 move1 = new Move("Ember", PokeType.FIRE, 20);
-                pokezon.setMove(move1);
-                pokezon.setMove(move2);
+                playerFirstPokezon.setMove(move1);
+                playerFirstPokezon.setMove(move2);
                 break;
 
             case 2:
-                pokezon = new Pokezon("Bulbasaur", PokeType.GRASS);
+                playerFirstPokezon = new Pokezon("Bulbasaur", PokeType.GRASS);
                 move1 = new Move("Vine Whip", PokeType.GRASS, 20);
-                pokezon.setMove(move1);
-                pokezon.setMove(move2);
+                playerFirstPokezon.setMove(move1);
+                playerFirstPokezon.setMove(move2);
                 break;
 
             case 3:
-                pokezon = new Pokezon("Squirtle", PokeType.WATER);
+                playerFirstPokezon = new Pokezon("Squirtle", PokeType.WATER);
                 move1 = new Move("Water Gun", PokeType.WATER, 20);
-                pokezon.setMove(move1);
-                pokezon.setMove(move2);
+                playerFirstPokezon.setMove(move1);
+                playerFirstPokezon.setMove(move2);
                 break;
 
             default:
-                pokezon = null;
+                playerFirstPokezon = null;
         }
 
         // Add chosen Pokezon to player team
-        Pokezon[] pokezonTeam = new Pokezon[3];
-        pokezonTeam[0] = pokezon;
-        player.setPokezonTeam(pokezonTeam);
-        player.setCurrentPokezon(pokezonTeam[0]);
+//        Pokezon[] pokezonTeam = new Pokezon[3];
+//        pokezonTeam[0] = pokezon;
+        player.addPokezonToTeam(playerFirstPokezon);
+//        player.setPokezonTeam(pokezonTeam);
+//        player.setCurrentPokezon(pokezonTeam[0]);
 
         // Add rival's chosen Pokezen to rival team
-        Pokezon[] rivalPokezonTeam = new Pokezon[3];
-        rivalPokezonTeam[0] = Dialogue.meetingRivalDialogue(player, rivalPlayer);
-        rivalPokezonTeam[0].setMove(move2);
-        rivalPlayer.setPokezonTeam(rivalPokezonTeam);
-        rivalPlayer.setCurrentPokezon(rivalPokezonTeam[0]);
+//        Pokezon[] rivalPokezonTeam = new Pokezon[3];
+        Pokezon rivalFirstPokezon = Dialogue.meetingRivalDialogue(player, rivalPlayer, playerFirstPokezon);
+        rivalFirstPokezon.setMove(move2);
+        rivalPlayer.addPokezonToTeam(rivalFirstPokezon);
+//        rivalPokezonTeam[0].setMove(move2);
+//        rivalPlayer.setPokezonTeam(rivalPokezonTeam);
+//        rivalPlayer.setCurrentPokezon(rivalPokezonTeam[0]);
 
         int numWins = 0;
         Battle battle;
@@ -70,16 +73,17 @@ public class Game {
 
             if (numWins == 0 || numWins == WIN_CONDITION) { // Always fight rival at the beginning of game
                 battle = new TrainerBattle(rivalPlayer);
+                battle.setEnemyPokezon(rivalPlayer.choosePokezon(1));
             }
             else {
                 battle = Battle.randomBattle();
             }
             battle.setPlayer(player);
-            battle.setPlayerPokezon(player.getCurrentPokezon());
+            battle.setPlayerPokezon(player.choosePokezon(1));
 
             boolean isTrainerBattle = battle.getClass() == TrainerBattle.class;
             if (isTrainerBattle) {
-                Pokezon enemyPokezon = ((TrainerBattle) battle).getEnemyTrainer().getCurrentPokezon();
+                Pokezon enemyPokezon = ((TrainerBattle) battle).getEnemyTrainer().choosePokezon(1);
                 battle.setEnemyPokezon(enemyPokezon);
             }
             else {
@@ -90,7 +94,7 @@ public class Game {
             battle.getEnemyPokezon().setLevel(numWins + 1);
 
             if (numWins == WIN_CONDITION) {
-                rivalPlayer.getCurrentPokezon().setCurrentHealth(rivalPlayer.getCurrentPokezon().getMaxHealth());
+                rivalPlayer.choosePokezon(1).setCurrentHealth(rivalPlayer.choosePokezon(1).getMaxHealth());
                 Dialogue.finalBattleDialogue(battle);
             }
 
@@ -103,14 +107,14 @@ public class Game {
                 switch (battleChoice) {
                     case 1: // Player chose to attack
                         int moveChoice = Dialogue.attackChoiceDialogue(battle);
-                        battle.getPlayer().chooseMove(moveChoice, battle.getEnemyPokezon());
+                        battle.getPlayer().chooseMove(moveChoice, battle.getPlayerPokezon(), battle.getEnemyPokezon());
 //                        battle.getPlayerPokezon().useMove(moveChoice, battle.getEnemyPokezon());
                         break;
 
                     case 2: // Player chose to switch to another Pokezon
                         int switchedPokezonChoice = Dialogue.pokezonChoiceDialogue(battle);
-//                        Pokezon switchedPokezon = player.getPokezon(switchedPokezonChoice); // Add public Pokezon getPokezon(int choice) to Trainer
-//                        player.setCurrentPokezon(switchedPokezon);
+//                        player.setCurrentPokezon(switchedPokezonChoice); // Add public Pokezon getPokezon(int choice) to Trainer
+                        battle.setPlayerPokezon(player.choosePokezon(switchedPokezonChoice));
 //                        System.out.println(player.getName() + " has chosen " + player.getCurrentPokezon().getName() + "!");
                         break;
 

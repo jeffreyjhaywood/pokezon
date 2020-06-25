@@ -1,5 +1,7 @@
 package com.pokezon;
 
+import com.pokezon.util.Dialogue;
+
 public class Move {
     // Constants
     private final int BASE_DAMAGE = 10;
@@ -23,6 +25,7 @@ public class Move {
         double damage = BASE_DAMAGE;
         if (enemyWeakness == type){
             damage *= 2;
+            Dialogue.superEffectiveDialogue();
         }
         return damage;
     }
