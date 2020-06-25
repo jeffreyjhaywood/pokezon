@@ -76,6 +76,12 @@ public final class Dialogue {
             System.out.println("1. Charmander");
             System.out.println("2. Bulbasaur");
             System.out.println("3. Squirtle");
+
+            while (!input.hasNextInt()){
+                System.out.println("Enter 1, 2, or 3!");
+                input.next();
+            }
+
             choice = input.nextInt();
             if (choice >= 1 && choice <= 3) {
                 acceptedInput = true;
@@ -201,6 +207,12 @@ public final class Dialogue {
             System.out.println("1. Attack");
             System.out.println("2. Switch Pokezon");
             System.out.println("3. Quit Game");
+
+            while (!input.hasNextInt()){
+                System.out.println("Enter 1, 2, or 3!");
+                input.next();
+            }
+
             choice = input.nextInt();
 
             if (choice >= 1 && choice <= 3) {
@@ -233,6 +245,12 @@ public final class Dialogue {
                     System.out.println(i + ". " + move.getName());
                 }
             }
+
+            while (!input.hasNextInt()){
+                System.out.println("Enter 1, or 2!");
+                input.next();
+            }
+
             choice = input.nextInt();
             if (choice >= 1 && choice <= i) {
                 acceptedInput = true;
@@ -306,6 +324,11 @@ public final class Dialogue {
         return choice;
     }
 
+    /**
+     * Displays dialogue when Pokezon faints.
+     *
+     * @param pokezonName Name of Pokezon that fainted.
+     */
     public static void faintedDialogue(String pokezonName) {
         SlowTyper.print(pokezonName + " has fainted.");
     }
