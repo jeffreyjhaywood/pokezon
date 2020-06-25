@@ -22,8 +22,8 @@ public class Game {
      *
      */
     public void begin() {
-//        Thread soundThread = new Thread(new Sound()); // will run at the same time in it's own thread
-//        soundThread.start();
+        Thread soundThread = new Thread(new Sound()); // will run at the same time in it's own thread
+        soundThread.start();
         Dialogue.titleScreenDialogue();
 
         // Ask player their name and instantiate their trainer and enemy rival objects
@@ -108,8 +108,10 @@ public class Game {
             battle.getEnemyPokezon().setLevel(numWins + 1);
 
             if (numWins == WIN_CONDITION) {
-                rivalPlayer.choosePokezon(1).setCurrentHealth(rivalPlayer.choosePokezon(1).getMaxHealth());
-                Dialogue.finalBattleDialogue(battle);
+                Pokezon finalBattlePokezon = rivalPlayer.choosePokezon(1);
+                finalBattlePokezon.setCurrentHealth(finalBattlePokezon.getMaxHealth());
+                battle.setEnemyPokezon(finalBattlePokezon);
+                Dialogue.finalBattleDialogue(battle, rivalPlayer);
             }
 
             Dialogue.battleStartDialogue(battle);

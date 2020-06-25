@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public final class SlowTyper {
     private static final int PRINT_MILLIS = 0;
-    private static final int LOADING_MILLIS = 115;
+    private static final int LOADING_MILLIS = 0;
     private static Scanner enterToContinue = new Scanner(System.in);
 
     /**
