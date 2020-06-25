@@ -66,9 +66,9 @@ public class Game {
         int numWins = 0;
         Battle battle;
 
-        while (numWins < WIN_CONDITION) { // Game win condition is to win 5 battles, loop until 5 wins or player loses.
+        while (numWins <= WIN_CONDITION) { // Game win condition is to win 5 battles, loop until 5 wins or player loses.
 
-            if (numWins == 0) { // Always fight rival at the beginning of game
+            if (numWins == 0 || numWins == WIN_CONDITION) { // Always fight rival at the beginning of game
                 battle = new TrainerBattle(rivalPlayer);
             }
             else {
@@ -88,6 +88,12 @@ public class Game {
                 battle.setEnemyPokezon(enemyPokezon); // Change to create random pokezon
             }
             battle.getEnemyPokezon().setLevel(numWins + 1);
+
+            if (numWins == WIN_CONDITION) {
+                rivalPlayer.getCurrentPokezon().setCurrentHealth(rivalPlayer.getCurrentPokezon().getMaxHealth());
+                Dialogue.finalBattleDialogue(battle);
+            }
+
             Dialogue.battleStartDialogue(battle);
 
             while (!battle.isBattleOver()) { // Keep looping until the battle is over.
@@ -119,8 +125,18 @@ public class Game {
                 if (battle.getEnemyPokezon().isFainted()) {
                     battle.setBattleOver(true);
                     battle.setPlayerWin(true);
+                    Dialogue.winDialogue();
                     battle.giveXpForWin();
+                    Dialogue.xpGainedDialogue(battle);
+
+                    int prevLevel = battle.getPlayerPokezon().getLevel();
                     battle.getPlayerPokezon().addXP(battle.getXpForWin());
+                    int postLevel = battle.getPlayerPokezon().getLevel();
+
+                    if (postLevel > prevLevel) {
+                        Dialogue.levelUpDialogue(battle);
+                    }
+
                     battle.getPlayerPokezon().setCurrentHealth(battle.getPlayerPokezon().getMaxHealth());
                 }
 
@@ -136,15 +152,17 @@ public class Game {
 
                 if (battle.isBattleOver() && battle.didPlayerWin()) { // Condition that player won the battle
                     numWins++;
-                    Dialogue.winDialogue();
                     break;
                 }
                 else if (battle.isBattleOver() && !battle.didPlayerWin()) { // Player lost the battle
                     Dialogue.lossDialogue();
+                    Dialogue.quitGameDialogue();
                     System.exit(0); // Quits the game
                 }
 
             }
         }
+        Dialogue.beatGameDialogue(player, rivalPlayer);
+        Dialogue.quitGameDialogue();
     }
 }

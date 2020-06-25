@@ -91,6 +91,14 @@ public final class Dialogue {
         return pokezon;
     }
 
+    public static void finalBattleDialogue(Battle battle) {
+        SlowTyper.print(battle.getPlayer().getName() + "... We meet again.");
+        SlowTyper.print("My " + battle.getEnemyPokezon().getName()
+                + " is going to DESTROY your "
+                + battle.getPlayerPokezon().getName());
+        SlowTyper.print("Lets battle!");
+    }
+
     public static void battleStartDialogue(Battle battle) { // Pass in a Battle as a parameter
         if (battle.getClass() == TrainerBattle.class) {
             TrainerBattle trainerBattle = (TrainerBattle) battle;
@@ -200,6 +208,16 @@ public final class Dialogue {
         SlowTyper.print("You have won the battle!");
     }
 
+    public static void xpGainedDialogue(Battle battle) {
+        SlowTyper.print(battle.getPlayerPokezon().getName() + " has earned "
+                + battle.getXpForWin()
+                + " XP for winning.");
+    }
+
+    public static void levelUpDialogue(Battle battle) {
+        SlowTyper.print(battle.getPlayerPokezon().getName() + " has leveled up to level " + battle.getPlayerPokezon().getLevel());
+    }
+
     public static void lossDialogue() {
         SlowTyper.print(PROFESSOR_NAME + "It seems like you don't have what it takes to be a Pokezon master...");
     }
@@ -208,8 +226,11 @@ public final class Dialogue {
         SlowTyper.print("Game is terminated, thank you for playing!");
     }
 
-    public static void beatGameDialogue() {
-        SlowTyper.print(PROFESSOR_NAME + "WOW! You defeated everyone including your rival?!");
+    public static void beatGameDialogue(Trainer player, Trainer rival) {
+        SlowTyper.print(rival.getName() + ": I can't believe I lost... again...");
+        SlowTyper.print(rival.getName() + ": I underestimated you, " + player.getName());
+        SlowTyper.print(rival.getName() + ": I'm going to go back to training my Pokezon and beat you next time!");
+        SlowTyper.print(PROFESSOR_NAME + "WOW! You defeated everyone including " + rival.getName() + "?");
         SlowTyper.print(PROFESSOR_NAME + "You truly are the Pokezon master.");
     }
 }
