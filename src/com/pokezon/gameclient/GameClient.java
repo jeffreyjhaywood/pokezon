@@ -10,17 +10,17 @@ package com.pokezon.gameclient;
 public class GameClient {
     /**
      * This is the entry point for the Pokezon game.
-     * Calls begin() method in game to start the game.
+     * Calls startGame() method in game to start the game.
      *
      * @param args
      */
     public static void main(String[] args) {
         try {
-            Game game = new Game();
-            game.begin();
+            Game.GAME_INSTANCE.startGame();
         }
         catch (Exception e) {
-            System.out.println("Game has crashed. You probably gave a bad input.");
+            e.printStackTrace();
+            System.out.println("Game has crashed");
         }
     }
 }
