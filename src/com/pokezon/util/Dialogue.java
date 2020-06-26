@@ -143,7 +143,7 @@ public final class Dialogue {
      */
     public static void finalBattleDialogue(Battle battle, Trainer rivalPlayer) {
         SlowTyper.print(rivalPlayer.getName() + ": "
-                +battle.getPlayer().getName() + "... We meet again.");
+                + battle.getPlayer().getName() + "... We meet again.");
         SlowTyper.print(rivalPlayer.getName() + ": "
                 + "My " + battle.getEnemyPokezon().getName()
                 + " is going to DESTROY your "

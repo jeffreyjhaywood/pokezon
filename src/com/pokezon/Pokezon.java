@@ -107,6 +107,13 @@ public class Pokezon {
         setCurrentHealth(newHealthValue);
     }
 
+    /**
+     * Restores the Pokezon's health to full
+     */
+    public void restoreHealth() {
+        setCurrentHealth(getMaxHealth());
+    }
+
     // Getters/Setters
     public String getName() {
         return name;
