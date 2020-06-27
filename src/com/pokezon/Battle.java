@@ -1,3 +1,5 @@
+package com.pokezon;
+
 /**
  * Battle is the "playing field" for every battle that happens.
  * There will always be 2 Pokezon battling each other (playerPokezon and enemyPokezon)
@@ -6,9 +8,6 @@
  * @version 0.9
  * @since 2020-06-19
  */
-
-package com.pokezon;
-
 public abstract class Battle {
     // BATTLE INSTANCE VARIABLES
     private Trainer player;
@@ -22,6 +21,11 @@ public abstract class Battle {
     // BATTLE CONSTANTS
     public final double BASE_XP = 10.0;
 
+    // Constructor
+    public Battle(Trainer player) {
+        setPlayer(player);
+        setPlayerPokezon(player.choosePokezon(1)); // Always send out first Pokezon at beginning of battle
+    }
     // BATTLE BUSINESS METHODS
 
     /**
@@ -29,9 +33,9 @@ public abstract class Battle {
      *
      * @return Randomly generated TrainerBattle or WildBattle
      */
-    public static Battle randomBattle() {
+    public static Battle randomBattle(Trainer player) {
         // Need to downcast in client to access subclass-only properties
-        return (Math.random() < .5) ? new TrainerBattle() : new WildBattle();
+        return (Math.random() < .5) ? new TrainerBattle(player) : new WildBattle(player);
     }
 
     /**
