@@ -1,3 +1,5 @@
+package com.pokezon;
+
 /**
  * TrainerBattle are a sublcass of Battle where the player is battling
  * against another Trainer.
@@ -6,19 +8,21 @@
  * @version 0.9
  * @since 2020-06-19
  */
-package com.pokezon;
-
 public class TrainerBattle extends Battle {
     // Instance Variables
     private Trainer enemyTrainer;
 
-    // Constructor
-    public TrainerBattle() {
+    // Constructors
+    public TrainerBattle(Trainer player){
+        super(player);
         setEnemyTrainer();
+        setEnemyPokezon(enemyTrainer.choosePokezon(1));
     }
 
-    public TrainerBattle(Trainer enemyTrainer){
+    public TrainerBattle(Trainer player, Trainer enemyTrainer) {
+        super(player);
         setEnemyTrainer(enemyTrainer);
+        setEnemyPokezon(enemyTrainer.choosePokezon(1));
     }
 
     // Business methods
@@ -41,12 +45,8 @@ public class TrainerBattle extends Battle {
      */
     public void setEnemyTrainer() {
         // Generate Random enemyTrainer - this is just an example
-        Pokezon tempSquirtle = new Pokezon("Squirtle", PokeType.WATER);
-        Pokezon tempBulbasaur = new Pokezon("Bulbasaur", PokeType.GRASS);
-
-        Move move = new Move("Tackle", PokeType.NORMAL, 20);
-        tempSquirtle.setMove(move);
-        tempBulbasaur.setMove(move);
+        Pokezon tempSquirtle = new Pokezon("Squirtle", PokeType.WATER, new Move("Tackle", PokeType.NORMAL, 20));
+        Pokezon tempBulbasaur = new Pokezon("Bulbasaur", PokeType.GRASS, new Move("Tackle", PokeType.NORMAL, 20));
 
         this.enemyTrainer = (Math.random() < .5) ? new Trainer("Bill", tempSquirtle) : new Trainer("Smith", tempBulbasaur);
     }

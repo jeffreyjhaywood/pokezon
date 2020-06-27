@@ -1,3 +1,10 @@
+package com.pokezon;
+
+import com.pokezon.util.Dialogue;
+import com.pokezon.util.SlowTyper;
+
+import java.util.Arrays;
+
 /**
  * Pokezon will be used to battle against each other. A Trainer will
  * choose Moves that their Pokezon knows to attack the enemy Pokezon.
@@ -9,13 +16,6 @@
  * @version 0.9
  * @since 2020-06-19
  */
-package com.pokezon;
-
-import com.pokezon.util.Dialogue;
-import com.pokezon.util.SlowTyper;
-
-import java.util.Arrays;
-
 public class Pokezon {
     // Constants
     private final double BASE_XP = 10;
@@ -48,6 +48,13 @@ public class Pokezon {
     public Pokezon(String name, PokeType type) {
         setName(name);
         setType(type);
+    }
+
+    public Pokezon(String name, PokeType type, Move... moves) {
+        this(name, type);
+        for (Move move : moves) {
+            setMove(move);
+        }
     }
 
     // Business Methods

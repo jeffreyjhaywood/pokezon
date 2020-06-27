@@ -1,22 +1,25 @@
-/**
- * Dialogue is the game's prompter class. Whenever dialogue in the story is required, one
- * of the methods will get called to display the dialogue.
- *
- * Some of the methods will ask for user input and return data relevant to what was asked.
- *
- * @author Jeffrey J. Haywood, Justin Lamb, Marcelo Nazario
- * @version 0.9
- * @since 2020-06-19
- */
 package com.pokezon.util;
 
 import com.pokezon.*;
 
 import java.util.Scanner;
 
+/**
+ * Dialogue is the game's prompter class. Whenever dialogue in the story is required, one
+ * of the methods will get called to display the dialogue.
+ *
+ * Some of the methods will ask for user input and return data relevant to what was asked.
+ *
+ * nextLine() is called at various  points in Dialogue to have the user have to press enter
+ * to continue.
+ *
+ * @author Jeffrey J. Haywood, Justin Lamb, Marcelo Nazario
+ * @version 0.9
+ * @since 2020-06-19
+ */
 public final class Dialogue {
     private static final String PROFESSOR_NAME = "Prof. Bezos: ";
-    static Scanner input = new Scanner(System.in);
+    private static final Scanner input = new Scanner(System.in);
 
     /**
      * Displays the title screen banner and asks user to press Enter to continue.
@@ -27,7 +30,9 @@ public final class Dialogue {
             SlowTyper.loadingBar();
         }
         catch (Exception e) {
+            e.printStackTrace();
         }
+
         System.out.println("Press Enter to continue...");
         input.nextLine();
     }
@@ -39,24 +44,27 @@ public final class Dialogue {
      * @return The player's name that they entered.
      */
     public static String introDialogue() {
-        String name = null;
+        String name;
 
-        SlowTyper.print(PROFESSOR_NAME + "Hello and welcome to the wonderful world of Pokezon!");
-        SlowTyper.print(PROFESSOR_NAME + "I'm Prof. Bezos, what's your name?",0);
+        SlowTyper.print(PROFESSOR_NAME + ": "  + "Hello and welcome to the wonderful world of Pokezon!");
+        SlowTyper.print(PROFESSOR_NAME + ": "  + "I'm " + PROFESSOR_NAME + " what's your name?",0);
 
         boolean acceptedInput = false;
-        while (!acceptedInput) {
+
+        do {
             name = input.nextLine();
+
             if (name != null && !name.equals("")) {
                 acceptedInput = true;
             }
             else {
-                SlowTyper.print("Enter a valid name, dummy.",0);
+                System.out.println("Enter a valid name, dummy.");
             }
-        }
 
-        SlowTyper.print(PROFESSOR_NAME + name + "? What a wonderful name!");
-        SlowTyper.print(PROFESSOR_NAME + "Hey... how would you like a Pokezon of your very own?");
+        } while(!acceptedInput);
+
+        SlowTyper.print(PROFESSOR_NAME + ": "  + name + "? What a wonderful name!");
+        SlowTyper.print(PROFESSOR_NAME + ": "  + "Hey... how would you like a Pokezon of your very own?");
 
         return name;
     }
@@ -68,31 +76,31 @@ public final class Dialogue {
      * @return Player's selection from the list of Pokezon.
      */
     public static int chooseFirstPokezonDialogue() {
-        SlowTyper.print(PROFESSOR_NAME + "You can choose one of these 3 starter Pokezon!",0);
+        SlowTyper.print(PROFESSOR_NAME + ": "  + "You can choose one of these 3 starter Pokezon!",0);
 
         int choice = 0;
         boolean acceptedInput = false;
-        while (!acceptedInput) {
+
+        do {
             System.out.println("1. Charmander");
             System.out.println("2. Bulbasaur");
             System.out.println("3. Squirtle");
 
-            while (!input.hasNextInt()){
-                System.out.println("Please choose one of the given options.");
-                System.out.println("1. Charmander");
-                System.out.println("2. Bulbasaur");
-                System.out.println("3. Squirtle");
+            if (!input.hasNextInt()) {
                 input.next();
             }
+            else {
+                choice = input.nextInt();
+            }
 
-            choice = input.nextInt();
             if (choice >= 1 && choice <= 3) {
                 acceptedInput = true;
             }
             else {
-                SlowTyper.print("Are you kidding me? I'm offering you a free Pokezon and you can't just give the correct input?",0);
+                System.out.println("Please choose one of the given options.");
             }
-        }
+
+        } while (!acceptedInput);
 
         return choice;
     }
@@ -103,36 +111,40 @@ public final class Dialogue {
      *
      * @param player The person playing the game's trainer
      * @param rival The rival trainer
-     * @param playerPokezon The player's pokezon
      * @return The rival's chosen Pokezon (always opposite of player Pokezon)
      */
-    public static Pokezon meetingRivalDialogue(Trainer player, Trainer rival, Pokezon playerPokezon) {
-        SlowTyper.print(PROFESSOR_NAME + playerPokezon.getName() + " What a wonderful choice!");
-        SlowTyper.print(PROFESSOR_NAME + "Who is that my grandson?");
+    public static Pokezon meetingRivalDialogue(Trainer player, Trainer rival) {
+        Pokezon playerPokezon = player.choosePokezon(1);
+        Pokezon rivalPokezon = null;
 
-        Pokezon pokezon = null;
+        SlowTyper.print(PROFESSOR_NAME + ": "  + playerPokezon.getName() + " What a wonderful choice!");
+        SlowTyper.print("???: .....");
+        SlowTyper.print(PROFESSOR_NAME + ": "  + "Who is that my grandson?");
 
         switch (playerPokezon.getName()){
             case "Bulbasaur":
-                pokezon = new Pokezon("Charmander", PokeType.FIRE);
+                rivalPokezon = new Pokezon("Charmander", PokeType.FIRE,
+                        new Move("Scratch", PokeType.NORMAL, 20));
                 break;
 
             case "Squirtle":
-                pokezon = new Pokezon("Bulbasaur", PokeType.GRASS);
+                rivalPokezon = new Pokezon("Bulbasaur", PokeType.GRASS,
+                        new Move("Tackle", PokeType.NORMAL, 20));
                 break;
 
             case "Charmander":
-                pokezon = new Pokezon("Squirtle", PokeType.WATER);
+                rivalPokezon = new Pokezon("Squirtle", PokeType.WATER,
+                        new Move("Tackle", PokeType.NORMAL, 20));
                 break;
 
             default:
         }
 
         SlowTyper.print(rival.getName() + ": Oh you chose " + playerPokezon.getName()
-                + ", I'm going to choose " + pokezon.getName());
+                + ", I'm going to choose " + rivalPokezon.getName());
         SlowTyper.print(rival.getName() + ": Lets battle!");
 
-        return pokezon;
+        return rivalPokezon;
     }
 
     /**
@@ -143,11 +155,14 @@ public final class Dialogue {
      */
     public static void finalBattleDialogue(Battle battle, Trainer rivalPlayer) {
         SlowTyper.print(rivalPlayer.getName() + ": "
-                + battle.getPlayer().getName() + "... We meet again.");
+                + battle.getPlayer().getName()
+                + "... We meet again.");
+
         SlowTyper.print(rivalPlayer.getName() + ": "
                 + "My " + battle.getEnemyPokezon().getName()
                 + " is going to DESTROY your "
                 + battle.getPlayerPokezon().getName());
+
         SlowTyper.print(rivalPlayer.getName() + ": Lets battle!");
     }
 
@@ -164,10 +179,12 @@ public final class Dialogue {
         if (battle.getClass() == TrainerBattle.class) {
             TrainerBattle trainerBattle = (TrainerBattle) battle;
 
-            SlowTyper.print(trainerBattle.getEnemyTrainer().getName() + " has started a battle!");
-            SlowTyper.print(trainerBattle.getEnemyTrainer().getName() + " sends out "
-                    + trainerBattle.getEnemyPokezon().getName());
+            SlowTyper.print(trainerBattle.getEnemyTrainer().getName()
+                    + " has started a battle!");
 
+            SlowTyper.print(trainerBattle.getEnemyTrainer().getName()
+                    + " sends out "
+                    + trainerBattle.getEnemyPokezon().getName());
         }
         else {
             WildBattle wildBattle = (WildBattle) battle;
@@ -175,7 +192,9 @@ public final class Dialogue {
             SlowTyper.print(wildBattle.getEnemyPokezon().getName() + " has started a battle!");
         }
 
-        SlowTyper.print(battle.getPlayer().getName() + " sends out " + battle.getPlayerPokezon().getName());
+        SlowTyper.print(battle.getPlayer().getName()
+                + " sends out "
+                + battle.getPlayerPokezon().getName());
     }
 
     /**
@@ -184,13 +203,14 @@ public final class Dialogue {
      * @param battle The instance of battle the player is currently fighting in.
      */
     public static void battleDiagnosticsDialogue(Battle battle) {
-        System.out.println(battle.getPlayerPokezon().getName() + " | "
-                + "Level: "
+        System.out.println(battle.getPlayerPokezon().getName()
+                + " | Level: "
                 + battle.getPlayerPokezon().getLevel()
                 + " | Current HP: "
                 + battle.getPlayerPokezon().getCurrentHealth());
-        System.out.println(battle.getEnemyPokezon().getName() + " | "
-                + "Level: "
+
+        System.out.println(battle.getEnemyPokezon().getName()
+                + " | Level: "
                 + battle.getEnemyPokezon().getLevel()
                 + " | current HP: "
                 + battle.getEnemyPokezon().getCurrentHealth());
@@ -204,30 +224,29 @@ public final class Dialogue {
     public static int battleChoiceDialogue() { // Pass in a Battle as a parameter
         System.out.println("What would you like to do?");
 
-        boolean acceptedInput = false;
         int choice = 0;
-        while (!acceptedInput) {
+        boolean acceptedInput = false;
+
+        do {
             System.out.println("1. Attack");
             System.out.println("2. Switch Pokezon");
             System.out.println("3. Quit Game");
 
-            while (!input.hasNextInt()){
-                System.out.println("Please choose one of the given options.");
-                System.out.println("1. Attack");
-                System.out.println("2. Switch Pokezon");
-                System.out.println("3. Quit Game");
+            if (!input.hasNextInt()) {
                 input.next();
             }
-
-            choice = input.nextInt();
+            else {
+                choice = input.nextInt();
+            }
 
             if (choice >= 1 && choice <= 3) {
                 acceptedInput = true;
             }
             else {
-                System.out.println("There are only three options...");
+                System.out.println("Please choose one of the given options.");
             }
-        }
+
+        } while (!acceptedInput);
 
         return choice;
     }
@@ -243,8 +262,10 @@ public final class Dialogue {
 
         int choice = 0;
         boolean acceptedInput = false;
-        while (!acceptedInput) {
+
+        do {
             int i = 0;
+
             for (Move move : battle.getPlayerPokezon().getKnownMoves()) {
                 if (move != null) {
                     i++;
@@ -252,19 +273,21 @@ public final class Dialogue {
                 }
             }
 
-            while (!input.hasNextInt()){
-                System.out.println("Please choose one of the given options.");
+            if (!input.hasNextInt()) {
                 input.next();
             }
+            else {
+                choice = input.nextInt();
+            }
 
-            choice = input.nextInt();
             if (choice >= 1 && choice <= i) {
                 acceptedInput = true;
             }
             else {
-                System.out.println("Choose a valid selection!");
+                System.out.println("Please choose one of the given options.");
             }
-        }
+
+        } while(!acceptedInput);
 
         return choice;
     }
@@ -308,30 +331,32 @@ public final class Dialogue {
 
         int choice = 0;
         boolean acceptedInput = false;
-        while (!acceptedInput) {
+
+        do {
             int i = 0;
 
             for (Pokezon pokezon : battle.getPlayer().getPokezonTeam()) {
-                i++;
                 if (pokezon != null) {
+                    i++;
                     System.out.println(i + ". " + pokezon.getName());
                 }
             }
 
-            while (!input.hasNextInt()){
-                System.out.println("Please choose one of the given options.");
+            if (!input.hasNextInt()) {
                 input.next();
             }
+            else {
+                choice = input.nextInt();
+            }
 
-            choice = input.nextInt();
-
-            if (choice >= 1 && choice < i) {
+            if (choice >= 1 && choice <= i) {
                 acceptedInput = true;
             }
             else {
-                System.out.println("Enter a valid input!");
+                System.out.println("Please choose one of the given options.");
             }
-        }
+
+        } while(!acceptedInput);
 
         return choice;
     }
@@ -376,7 +401,7 @@ public final class Dialogue {
      * Displays whenever the player loses a battle.
      */
     public static void lossDialogue() {
-        SlowTyper.print(PROFESSOR_NAME + "It seems like you don't have what it takes to be a Pokezon master...");
+        SlowTyper.print(PROFESSOR_NAME + ": "  + "It seems like you don't have what it takes to be a Pokezon master...");
     }
 
     /**
@@ -396,7 +421,7 @@ public final class Dialogue {
         SlowTyper.print(rival.getName() + ": I can't believe I lost... again...");
         SlowTyper.print(rival.getName() + ": I underestimated you, " + player.getName());
         SlowTyper.print(rival.getName() + ": I'm going to go back to training my Pokezon and beat you next time!");
-        SlowTyper.print(PROFESSOR_NAME + "WOW! You defeated everyone including " + rival.getName() + "?");
-        SlowTyper.print(PROFESSOR_NAME + "You truly are the Pokezon master.");
+        SlowTyper.print(PROFESSOR_NAME + ": "  + "WOW! You defeated everyone including " + rival.getName() + "?");
+        SlowTyper.print(PROFESSOR_NAME + ": "  + "You truly are the Pokezon master.");
     }
 }

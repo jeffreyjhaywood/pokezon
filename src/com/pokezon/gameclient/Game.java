@@ -1,3 +1,9 @@
+package com.pokezon.gameclient;
+
+import com.pokezon.*;
+import com.pokezon.util.Dialogue;
+import com.pokezon.util.Sound;
+
 /**
  * Game holds all of the game's story/sequence logic.
  * It calls methods in the game's sequential order.
@@ -6,12 +12,6 @@
  * @version 0.9
  * @since 2020-06-19
  */
-package com.pokezon.gameclient;
-
-import com.pokezon.*;
-import com.pokezon.util.Dialogue;
-import com.pokezon.util.Sound;
-
 public enum Game {
     GAME_INSTANCE;
 
@@ -53,7 +53,7 @@ public enum Game {
 
     /**
      * Introduces player to the Professor and sets
-     * the player's given name
+     * the player's given name.
      */
     private void meetProfessor() {
         String playerName = Dialogue.introDialogue();
@@ -62,43 +62,34 @@ public enum Game {
 
     /**
      * Creates Pokezon object based upon player's
-     * selection.
+     * selection and adds it to player's pokezonTeam.
      */
     private void chooseFirstPokezon() {
-        // Create player's Pokezon and assign its initial 2 moves to it
-        Pokezon playerFirstPokezon;
-        Move move1;
-        Move move2 = new Move("Tackle", PokeType.NORMAL, 20);
+        Pokezon playerFirstPokezon = null;
 
         int pokezonChoice = Dialogue.chooseFirstPokezonDialogue();
-
         switch (pokezonChoice) {
             case 1:
-                playerFirstPokezon = new Pokezon("Charmander", PokeType.FIRE);
-                move1 = new Move("Ember", PokeType.FIRE, 20);
-                playerFirstPokezon.setMove(move1);
-                playerFirstPokezon.setMove(move2);
+                playerFirstPokezon = new Pokezon("Charmander", PokeType.FIRE,
+                        new Move("Tackle", PokeType.NORMAL, 20),
+                        new Move("Ember", PokeType.FIRE, 20));
                 break;
 
             case 2:
-                playerFirstPokezon = new Pokezon("Bulbasaur", PokeType.GRASS);
-                move1 = new Move("Vine Whip", PokeType.GRASS, 20);
-                playerFirstPokezon.setMove(move1);
-                playerFirstPokezon.setMove(move2);
+                playerFirstPokezon = new Pokezon("Bulbasaur", PokeType.GRASS,
+                        new Move("Tackle", PokeType.NORMAL, 20),
+                        new Move("Vine Whip", PokeType.GRASS, 20));
                 break;
 
             case 3:
-                playerFirstPokezon = new Pokezon("Squirtle", PokeType.WATER);
-                move1 = new Move("Water Gun", PokeType.WATER, 20);
-                playerFirstPokezon.setMove(move1);
-                playerFirstPokezon.setMove(move2);
+                playerFirstPokezon = new Pokezon("Squirtle", PokeType.WATER,
+                        new Move("Tackle", PokeType.NORMAL, 20),
+                        new Move("Water Gun", PokeType.WATER, 20));
                 break;
 
             default:
-                playerFirstPokezon = null;
         }
 
-        // Add chosen Pokezon to player team
         player.addPokezonToTeam(playerFirstPokezon);
     }
 
@@ -108,8 +99,7 @@ public enum Game {
      */
     private void meetRival() {
         rivalPlayer = new Trainer("Jay");
-        Pokezon rivalFirstPokezon = Dialogue.meetingRivalDialogue(player, rivalPlayer, player.choosePokezon(1));
-        rivalFirstPokezon.setMove(new Move("Tackle", PokeType.NORMAL, 20));
+        Pokezon rivalFirstPokezon = Dialogue.meetingRivalDialogue(player, rivalPlayer);
         rivalPlayer.addPokezonToTeam(rivalFirstPokezon);
     }
 
@@ -118,13 +108,13 @@ public enum Game {
      * rival.
      */
     private void firstBattle() {
-        battle = new TrainerBattle(rivalPlayer);
-        battle.setEnemyPokezon(rivalPlayer.choosePokezon(1));
+        battle = new TrainerBattle(player, rivalPlayer);
 
-        battle.setPlayer(player);
-        battle.setPlayerPokezon(player.choosePokezon(1));
+        Dialogue.battleStartDialogue(battle);
 
         battleLoop(battle);
+
+        rivalPlayer.choosePokezon(1).restoreHealth();
     }
 
     /**
@@ -132,17 +122,12 @@ public enum Game {
      * rival.
      */
     private void finalBattle() {
-        battle = new TrainerBattle(rivalPlayer);
+        battle = new TrainerBattle(player, rivalPlayer);
 
-        battle.setPlayer(player);
-        battle.setPlayerPokezon(player.choosePokezon(1));
-
-        Pokezon finalBattlePokezon = rivalPlayer.choosePokezon(1);
-        finalBattlePokezon.restoreHealth(); // Reset rival Pokezon's health to max
-        finalBattlePokezon.setLevel(10);
-        battle.setEnemyPokezon(finalBattlePokezon);
+        rivalPlayer.choosePokezon(1).setLevel(10); // Change rival Pokezon level to 10 on final battle.
 
         Dialogue.finalBattleDialogue(battle, rivalPlayer);
+        Dialogue.battleStartDialogue(battle);
 
         battleLoop(battle);
     }
@@ -152,21 +137,8 @@ public enum Game {
      * player to battle in.
      */
     private void battle() {
-        battle = Battle.randomBattle();
+        battle = Battle.randomBattle(player);
 
-        battle.setPlayer(player);
-        battle.setPlayerPokezon(player.choosePokezon(1));
-
-        boolean isTrainerBattle = (battle.getClass() == TrainerBattle.class);
-        Pokezon enemyPokezon;
-        if (isTrainerBattle) {
-            enemyPokezon = ((TrainerBattle) battle).getEnemyTrainer().choosePokezon(1);
-        }
-        else {
-            enemyPokezon = new Pokezon("Squirtle", PokeType.WATER); // Change to create random pokezon
-            enemyPokezon.setMove(new Move("Water Gun", PokeType.WATER, 20));
-        }
-        battle.setEnemyPokezon(enemyPokezon);
         battle.getEnemyPokezon().setLevel(numWins + 1); // Increases the enemy Pokezon level further in story
 
         Dialogue.battleStartDialogue(battle);
@@ -175,16 +147,17 @@ public enum Game {
     }
 
     /**
-     * Loops through a battle until either the player loses or
-     * wins.
+     * Loops through a battle until either the player wins or
+     * loses.
      *
      * @param battle The battle instance the player is battling in.
      */
     private void battleLoop(Battle battle) {
-        while (!battle.isBattleOver()) {
+        do {
             Dialogue.battleDiagnosticsDialogue(battle);
 
             int battleChoice = Dialogue.battleChoiceDialogue();
+
             switch (battleChoice) {
                 case 1: // Player chose to attack
                     int moveChoice = Dialogue.attackChoiceDialogue(battle);
@@ -241,7 +214,9 @@ public enum Game {
                     quitGame();
                 }
             }
-        }
+
+        } while(!battle.isBattleOver());
+
     }
 
     /**
